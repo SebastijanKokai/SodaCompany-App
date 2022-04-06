@@ -1,0 +1,13 @@
+.hidden {
+  display: none;
+}
+
+.table {
+  margin: 0 auto;
+  margin-top: 2%;
+}
+
+.button {
+  width: 100vw;
+  margin: 0 auto;
+}
