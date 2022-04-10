@@ -18,9 +18,6 @@ const AddModal = (props) => {
       <Modal.Body>
         <props.BodyComponent />
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Save</Button>
-      </Modal.Footer>
     </Modal>
   );
 };

@@ -6,7 +6,7 @@ import OrderProductsTable from "./OrderProductsTable/OrderProductsTable";
 
 import Button from "react-bootstrap/Button";
 import AddModal from "../Modal/AddModal";
-import AddModalBody from "./AddModalBody";
+import AddModalBody from "./AddModal/AddModalBody";
 
 const columns = [
   {
@@ -31,7 +31,12 @@ const columns = [
     formatter: (cellContent, row) => {
       return (
         <div>
-          <Button className="btn btn-danger btn-xs">Delete</Button>
+          <Button
+            className="btn btn-danger btn-xs"
+            style={{ marginRight: "12px" }}
+          >
+            Delete
+          </Button>
           <Button variant="warning">Edit</Button>
         </div>
       );
