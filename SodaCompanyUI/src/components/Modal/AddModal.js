@@ -11,10 +11,12 @@ const AddModal = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Add Modal</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          {props.title}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <props.bodycomponent />
+        <props.BodyComponent />
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Save</Button>
