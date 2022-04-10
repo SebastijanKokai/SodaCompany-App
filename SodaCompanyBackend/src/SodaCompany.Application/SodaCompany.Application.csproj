@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.23" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.23" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SodaCompany.Common\SodaCompany.Common.csproj" />
+    <ProjectReference Include="..\SodaCompany.Core\SodaCompany.Core.csproj" />
+    <ProjectReference Include="..\SodaCompany.Infrastructure\SodaCompany.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Employees\" />
+    <Folder Include="Commands\OrganizationalUnits\" />
+    <Folder Include="Commands\Parts\" />
+    <Folder Include="Commands\ProductionModels\" />
+    <Folder Include="Commands\Warehouses\" />
+    <Folder Include="Commands\WorkProcedures\" />
+    <Folder Include="Handlers\CommandHandlers\Employees\" />
+    <Folder Include="Handlers\CommandHandlers\OrganizationalUnits\" />
+    <Folder Include="Handlers\CommandHandlers\Parts\" />
+    <Folder Include="Handlers\CommandHandlers\ProductionModels\" />
+    <Folder Include="Handlers\CommandHandlers\Warehouses\" />
+    <Folder Include="Handlers\CommandHandlers\WorkProcedures\" />
+    <Folder Include="Handlers\QueryHandlers\Employees\" />
+    <Folder Include="Handlers\QueryHandlers\OrganizationalUnits\" />
+    <Folder Include="Handlers\QueryHandlers\Parts\" />
+    <Folder Include="Handlers\QueryHandlers\ProductionModels\" />
+    <Folder Include="Handlers\QueryHandlers\Warehouses\" />
+    <Folder Include="Handlers\QueryHandlers\WorkProcedures\" />
+    <Folder Include="Queries\Employees\" />
+    <Folder Include="Queries\Warehouses\" />
+    <Folder Include="Queries\ProductionModels\" />
+    <Folder Include="Queries\Parts\" />
+    <Folder Include="Queries\OrganizationalUnits\" />
+    <Folder Include="Queries\WorkProcedures\" />
+    <Folder Include="Responses\Employees\" />
+    <Folder Include="Responses\OrganizationalUnits\" />
+    <Folder Include="Responses\ProductionModels\" />
+    <Folder Include="Responses\Warehouses\" />
+    <Folder Include="Responses\WorkProcedures\" />
+  </ItemGroup>
+
+</Project>
