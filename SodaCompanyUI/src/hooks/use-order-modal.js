@@ -47,6 +47,10 @@ const useOrderModal = () => {
   };
 
   const changeHandler = (i, e) => {
+    if (e.target.name === "quantity" && e.target.value >= 1000000) {
+      return;
+    }
+
     console.log(selectedProducts);
     const newState = [...selectedProducts];
     newState[i][e.target.name] = e.target.value;

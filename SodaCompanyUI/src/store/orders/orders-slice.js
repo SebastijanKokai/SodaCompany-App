@@ -6,9 +6,14 @@ const ordersSlice = createSlice({
   name: "orders",
   initialState: {
     orders: [],
+    isLoading: false,
+    error: {},
   },
   reducers: {
-    getOrders(state, action) {
+    getOrders(state) {
+      state.isLoading = true;
+    },
+    getOrdersSuccess(state, action) {
       const { data } = action.payload;
       const orderArray = [];
       for (const key in data) {
@@ -26,6 +31,11 @@ const ordersSlice = createSlice({
         });
       }
       state.orders = orderArray;
+      state.isLoading = false;
+    },
+    getOrdersError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
     addOrder(state, action) {
       const data = action.payload;
@@ -34,6 +44,7 @@ const ordersSlice = createSlice({
   },
 });
 
-export const { getOrders, addOrder } = ordersSlice.actions;
+export const { getOrders, getOrdersSuccess, getOrdersError, addOrder } =
+  ordersSlice.actions;
 
 export default ordersSlice.reducer;

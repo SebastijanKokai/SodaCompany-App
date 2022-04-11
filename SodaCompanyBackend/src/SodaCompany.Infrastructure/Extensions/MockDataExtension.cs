@@ -130,6 +130,24 @@ namespace SodaCompany.Infrastructure.Extensions
                 Value = .33m,
                 Width = 30
             });
+            context.ProductModel.Add(new ProductModel()
+            {
+                Id = Guid.Parse("1a59820a-8ed2-4247-8e62-6f8561fec2c2"),
+                Height = 240,
+                Type = "plastika",
+                Unit = "l",
+                Value = .5m,
+                Width = 30
+            });
+            context.ProductModel.Add(new ProductModel()
+            {
+                Id = Guid.Parse("2047f2d0-8fdd-46c2-958b-5e5aeea3c604"),
+                Height = 120,
+                Type = "staklo",
+                Unit = "l",
+                Value = .25m,
+                Width = 30
+            });
             return context;
         }
         public static SodaCompanyContext PrefillWorkProcedure(this SodaCompanyContext context)
@@ -151,6 +169,18 @@ namespace SodaCompany.Infrastructure.Extensions
                 ProductModelId = Guid.Parse("ba07bbab-8a70-430f-b5a4-7581cc6db76b"),
                 Id = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
                 Name = "Coca-cola staklo 0.33"
+            });
+            context.Product.Add(new Product()
+            {
+                ProductModelId = Guid.Parse("1a59820a-8ed2-4247-8e62-6f8561fec2c2"),
+                Id = Guid.Parse("f620e5eb-80c6-46f7-be3f-55c0fe633eac"),
+                Name = "Sprite plastika 0.5"
+            });
+            context.Product.Add(new Product()
+            {
+                ProductModelId = Guid.Parse("2047f2d0-8fdd-46c2-958b-5e5aeea3c604"),
+                Id = Guid.Parse("89945a5d-3eb5-4c65-88d6-9f0864bdc376"),
+                Name = "Fanta staklo 0.25"
             });
             return context;
         }
@@ -251,6 +281,20 @@ namespace SodaCompany.Infrastructure.Extensions
                 Id = Guid.Parse("b6b84d05-f84c-44a0-80c1-4652992d36b1"),
                 Name = "Maxi coca cola .33 nalog"
             });
+            context.ProductionOrder.Add(new ProductionOrder()
+            {
+                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreationDate = DateTime.Now,
+                Id = Guid.Parse("13ad389f-f5c1-4378-af98-12a20db1516a"),
+                Name = "Fanta .5 nalog"
+            });
+            context.ProductionOrder.Add(new ProductionOrder()
+            {
+                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreationDate = DateTime.Now,
+                Id = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4"),
+                Name = "Sprite .5 nalog"
+            });
             return context;
         }
         public static SodaCompanyContext PrefillProductionOrderProduct(this SodaCompanyContext context)
@@ -261,6 +305,27 @@ namespace SodaCompany.Infrastructure.Extensions
                 ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
                 ProductionOrderId = Guid.Parse("b6b84d05-f84c-44a0-80c1-4652992d36b1"),
                 Quantity = 500
+            });
+            context.ProductionOrderProduct.Add(new ProductionOrderProduct()
+            {
+                Id = Guid.Parse("600ffc78-9638-4f54-bbad-b9148a34b780"),
+                ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
+                ProductionOrderId = Guid.Parse("13ad389f-f5c1-4378-af98-12a20db1516a"),
+                Quantity = 150
+            });
+            context.ProductionOrderProduct.Add(new ProductionOrderProduct()
+            {
+                Id = Guid.Parse("66c8fc91-a35b-4507-a130-3d6739eb6f72"),
+                ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
+                ProductionOrderId = Guid.Parse("13ad389f-f5c1-4378-af98-12a20db1516a"),
+                Quantity = 200
+            });
+            context.ProductionOrderProduct.Add(new ProductionOrderProduct()
+            {
+                Id = Guid.Parse("212c13bf-7148-4f01-bfff-023b9dc1cd9f"),
+                ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
+                ProductionOrderId = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4"),
+                Quantity = 200
             });
             return context;
         }

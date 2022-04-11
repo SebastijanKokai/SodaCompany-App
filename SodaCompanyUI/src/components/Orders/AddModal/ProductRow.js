@@ -14,9 +14,7 @@ const ProductRow = ({ product, onRemove, onChange }) => {
           value={product.name}
           onChange={onChange}
         >
-          <option>Select</option>
-          <option>Hello</option>
-          <option>Hello2</option>
+          <option>1</option>
         </Form.Select>
       </Col>
       <Col>
@@ -24,7 +22,7 @@ const ProductRow = ({ product, onRemove, onChange }) => {
         <Form.Control
           id="quantity"
           name="quantity"
-          type="text"
+          type="number"
           value={product.quantity}
           onChange={onChange}
         />

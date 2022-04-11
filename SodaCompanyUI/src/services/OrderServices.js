@@ -1,33 +1,33 @@
 import api from "../api/api";
 
 const OrderServices = {
-  getAll: async () => {
+  getAll: () => {
     try {
-      const response = await api.get("ProductionOrders");
+      const response = api.get("ProductionOrders");
       return response;
     } catch (error) {
       console.log(error.message);
     }
   },
-  create: async (newOrder) => {
+  create: (newOrder) => {
     try {
-      const response = await api.post("ProductionOrders", newOrder);
+      const response = api.post("ProductionOrders", newOrder);
       return response;
     } catch (error) {
       console.log(error.message);
     }
   },
-  update: async (id) => {
+  update: (id) => {
     try {
-      const response = await api.put(`ProductionOrders/${id}`);
+      const response = api.put(`ProductionOrders/${id}`);
       return response;
     } catch (error) {
       console.log(error.message);
     }
   },
-  delete: async (id) => {
+  delete: (id) => {
     try {
-      const response = await api.delete(`ProductionOrders/${id}`);
+      const response = api.delete(`ProductionOrders/${id}`);
       return response;
     } catch (error) {
       console.log(error.message);

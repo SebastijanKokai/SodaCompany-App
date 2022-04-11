@@ -1,8 +1,9 @@
-import { useEffect, Fragment } from "react";
+import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { GET_ORDERS } from "./store/sagas/saga-actions";
+import { getOrders } from "./store/orders/orders-slice";
+import { getProducts } from "./store/products/products-slice";
 
 import "./App.css";
 
@@ -11,10 +12,8 @@ import Orders from "./components/Orders/Orders";
 
 const App = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: GET_ORDERS });
-  }, [dispatch]);
+  dispatch(getOrders());
+  dispatch(getProducts());
 
   return (
     <Fragment>
