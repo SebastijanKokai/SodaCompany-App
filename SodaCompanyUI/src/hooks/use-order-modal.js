@@ -1,12 +1,23 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { addOrder } from "../store/orders/orders-slice";
 
 const useOrderModal = () => {
+  const dispatch = useDispatch();
+
   const [selectedProducts, setSelectedProducts] = useState([
     {
-      name: "",
+      productId: "",
       quantity: 0,
     },
   ]);
+
+  const [orderName, setOrderName] = useState("");
+
+  const orderNameChangeHandler = (e) => {
+    setOrderName(e.target.value);
+  };
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -19,7 +30,7 @@ const useOrderModal = () => {
       return [
         ...prevState,
         {
-          name: "",
+          productId: "",
           quantity: 0,
         },
       ];
@@ -38,7 +49,6 @@ const useOrderModal = () => {
       setIsButtonDisabled(false);
     }
 
-    console.log(selectedProducts);
     setSelectedProducts((prevState) => {
       const newState = [...prevState];
       newState.splice(idx, 1);
@@ -51,19 +61,52 @@ const useOrderModal = () => {
       return;
     }
 
-    console.log(selectedProducts);
     const newState = [...selectedProducts];
     newState[i][e.target.name] = e.target.value;
     setSelectedProducts(newState);
   };
 
+  const checkIfValid = () => {
+    if (orderName === "") {
+      return false;
+    }
+
+    for (let i = 0; i < selectedProducts.length; i++) {
+      if (
+        selectedProducts[i].productId === "" ||
+        Number.isNaN(selectedProducts[i].quantity) ||
+        selectedProducts[i].quantity < 1
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(selectedProducts));
+
+    if (!checkIfValid()) {
+      return;
+    }
+
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+
+    const newOrder = {
+      Name: orderName,
+      CreationDate: today,
+      CreatedBy: "9d6f01e7-a53e-4c4a-a9ea-653732fe4af3",
+      OrderProducts: selectedProducts,
+    };
+
+    dispatch(addOrder(newOrder));
   };
   return {
     selectedProducts,
     isButtonDisabled,
+    orderName,
+    orderNameChangeHandler,
     addHandler,
     removeHandler,
     changeHandler,

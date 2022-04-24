@@ -9,12 +9,12 @@ const OrderServices = {
       console.log(error.message);
     }
   },
-  create: (newOrder) => {
+  create: async (newOrder) => {
     try {
-      const response = api.post("ProductionOrders", newOrder);
+      const response = await api.post("ProductionOrders", newOrder);
       return response;
-    } catch (error) {
-      console.log(error.message);
+    } catch ({ response }) {
+      return response;
     }
   },
   update: (id) => {

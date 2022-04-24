@@ -13,7 +13,7 @@ import Orders from "./components/Orders/Orders";
 const App = () => {
   const dispatch = useDispatch();
   dispatch(getOrders());
-  dispatch(getProducts());
+  // dispatch(getProducts());
 
   return (
     <Fragment>

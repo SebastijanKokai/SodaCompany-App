@@ -10,6 +10,10 @@ import AddModalBody from "./AddModal/AddModalBody";
 
 const columns = [
   {
+    dataField: "id",
+    text: "Id",
+  },
+  {
     dataField: "manager",
     text: "Manager",
   },
@@ -54,7 +58,6 @@ const expandRow = {
 
 const Orders = () => {
   const orders = useSelector((state) => state.orders.orders);
-  console.log(orders);
 
   const [modalShow, setModalShow] = useState(false);
   return (

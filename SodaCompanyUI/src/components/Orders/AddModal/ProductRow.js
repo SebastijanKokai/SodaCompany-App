@@ -3,18 +3,25 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const ProductRow = ({ product, onRemove, onChange }) => {
+const ProductRow = ({ products, product, onRemove, onChange }) => {
   return (
     <Row>
       <Col>
         <Form.Label htmlFor="select">Product</Form.Label>
         <Form.Select
           id="select"
-          name="name"
-          value={product.name}
+          name="productId"
+          defaultValue=""
           onChange={onChange}
         >
-          <option>1</option>
+          <option value="" disabled>
+            Select product
+          </option>
+          {products.map((product, idx) => (
+            <option key={`Option_${idx}`} value={product.id}>
+              {product.name}
+            </option>
+          ))}
         </Form.Select>
       </Col>
       <Col>

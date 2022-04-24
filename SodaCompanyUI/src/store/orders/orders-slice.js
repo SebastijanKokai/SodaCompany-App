@@ -20,7 +20,7 @@ const ordersSlice = createSlice({
         const date = moment(data[key].creationDate, "DD-MM-YYYY").format(
           "DD-MM-YYYY"
         );
-        console.log(date);
+
         orderArray.push({
           id: data[key].id,
           manager: data[key].createdBy,
@@ -37,14 +37,36 @@ const ordersSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    addOrder(state, action) {
+    addOrder(state) {
+      state.isLoading = true;
+    },
+    addOrderSuccess(state, action) {
       const data = action.payload;
-      console.log(data);
+
+      const date = moment(data.creationDate, "DD-MM-YYYY").format("DD-MM-YYYY");
+
+      state.orders.push({
+        manager: data.createdBy,
+        orderName: data.name,
+        dateCreated: date,
+        totalProducts: data.orderProducts.length,
+        products: data.orderProducts,
+      });
+    },
+    addOrderError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
 
-export const { getOrders, getOrdersSuccess, getOrdersError, addOrder } =
-  ordersSlice.actions;
+export const {
+  getOrders,
+  getOrdersSuccess,
+  getOrdersError,
+  addOrder,
+  addOrderSuccess,
+  addOrderError,
+} = ordersSlice.actions;
 
 export default ordersSlice.reducer;
