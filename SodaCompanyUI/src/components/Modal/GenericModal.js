@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const AddModal = (props) => {
+const GenericModal = (props) => {
   return (
     <Modal
       show={props.show}
@@ -16,10 +16,10 @@ const AddModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <props.BodyComponent />
+        <props.BodyComponent orderId={props.orderId} onHide={props.onHide} />
       </Modal.Body>
     </Modal>
   );
 };
 
-export default AddModal;
+export default GenericModal;

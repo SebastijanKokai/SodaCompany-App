@@ -215,6 +215,7 @@ namespace SodaCompany.Infrastructure.Data
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.ProductionOrder)
                     .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Productio__creat__51300E55");
             });
 
@@ -270,13 +271,13 @@ namespace SodaCompany.Infrastructure.Data
                 entity.HasOne(d => d.CreatedByNavigation)
                     .WithMany(p => p.ProductionPlan)
                     .HasForeignKey(d => d.CreatedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Productio__creat__540C7B00");
 
                 entity.HasOne(d => d.ProductionOrder)
                     .WithMany(p => p.ProductionPlan)
                     .HasForeignKey(d => d.ProductionOrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Productio__produ__55009F39");
             });
 

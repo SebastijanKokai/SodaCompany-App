@@ -19,7 +19,14 @@ const App = () => {
     <Fragment>
       <Navigation />
       <Routes>
-        <Route path="/" element={<div></div>} />
+        <Route
+          path="/"
+          element={
+            <div className="center">
+              <h1>Welcome to the Home page!</h1>
+            </div>
+          }
+        />
         <Route path="/orders" element={<Orders />} />
         <Route path="/plans" element={<div></div>} />
       </Routes>

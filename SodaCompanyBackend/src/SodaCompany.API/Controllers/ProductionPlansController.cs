@@ -23,7 +23,7 @@ namespace SodaCompany.API.Controllers
         public async Task<ActionResult<ProductionPlanResponse>> GetProductionPlans([FromQuery] GetProductionPlansQuery query)
         {
             var productionPlans = await _mediator.Send(query);
-            if (productionPlans.Data.Any())
+            if (productionPlans!=null && productionPlans.Data.Any())
                 return Ok(productionPlans);
             return NoContent();
         }

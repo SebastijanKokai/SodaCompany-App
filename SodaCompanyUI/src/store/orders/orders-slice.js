@@ -17,13 +17,11 @@ const ordersSlice = createSlice({
       const { data } = action.payload;
       const orderArray = [];
       for (const key in data) {
-        const date = moment(data[key].creationDate, "DD-MM-YYYY").format(
-          "DD-MM-YYYY"
-        );
+        const date = moment(data.creationDate).format("DD-MM-YYYY");
 
         orderArray.push({
           id: data[key].id,
-          manager: data[key].createdBy,
+          manager: `${data[key].createdByNavigationName} ${data[key].createdByNavigationSurname}`,
           orderName: data[key].name,
           dateCreated: date,
           totalProducts: data[key].orderedProducts.length,
@@ -43,17 +41,29 @@ const ordersSlice = createSlice({
     addOrderSuccess(state, action) {
       const data = action.payload;
 
-      const date = moment(data.creationDate, "DD-MM-YYYY").format("DD-MM-YYYY");
+      const date = moment(data.creationDate).format("DD-MM-YYYY");
 
       state.orders.push({
-        manager: data.createdBy,
+        id: data.id,
+        manager: `${data.createdByNavigationName} ${data.createdByNavigationSurname}`,
         orderName: data.name,
         dateCreated: date,
-        totalProducts: data.orderProducts.length,
-        products: data.orderProducts,
+        totalProducts: data.orderedProducts.length,
+        products: data.orderedProducts,
       });
     },
     addOrderError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    deleteOrder(state) {
+      state.isLoading = true;
+    },
+    deleteOrderSuccess(state, action) {
+      const id = action.payload;
+      state.orders = state.orders.filter((order) => order.id !== id);
+    },
+    deleteOrderError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -67,6 +77,9 @@ export const {
   addOrder,
   addOrderSuccess,
   addOrderError,
+  deleteOrder,
+  deleteOrderSuccess,
+  deleteOrderError,
 } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

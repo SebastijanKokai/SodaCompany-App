@@ -83,6 +83,18 @@ const useOrderModal = () => {
     return true;
   };
 
+  const resetFields = () => {
+    setOrderName("");
+    setSelectedProducts((prevState) => {
+      const newState = [...prevState];
+      while (newState.length > 1) {
+        newState.pop();
+      }
+      newState[0].quantity = 0;
+      return newState;
+    });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -95,13 +107,15 @@ const useOrderModal = () => {
 
     const newOrder = {
       Name: orderName,
-      CreationDate: today,
+      CreationDate: today.toISOString(),
       CreatedBy: "9d6f01e7-a53e-4c4a-a9ea-653732fe4af3",
       OrderProducts: selectedProducts,
     };
 
     dispatch(addOrder(newOrder));
+    resetFields();
   };
+
   return {
     selectedProducts,
     isButtonDisabled,

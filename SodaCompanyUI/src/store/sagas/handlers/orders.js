@@ -4,6 +4,8 @@ import {
   getOrdersError,
   addOrderSuccess,
   addOrderError,
+  deleteOrderSuccess,
+  deleteOrderError,
 } from "../../orders/orders-slice";
 
 import { getProductsSuccess } from "../../products/products-slice";
@@ -27,9 +29,23 @@ export function* handleGetOrders(action) {
 export function* handleAddOrder(action) {
   const newOrder = action.payload;
   const { data, statusCode } = yield call(OrderServices.create, newOrder);
-  yield put(addOrderSuccess(data));
 
-  if (statusCode >= 400 || statusCode < 600) {
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(addOrderError(data.message));
     console.log(data.message);
+  } else {
+    yield put(addOrderSuccess(data));
+  }
+}
+
+export function* handleDeleteOrder(action) {
+  const id = action.payload;
+  const { data, statusCode } = yield call(OrderServices.delete, id);
+
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(deleteOrderError(data.message));
+    console.log(data.message);
+  } else {
+    yield put(deleteOrderSuccess(id));
   }
 }

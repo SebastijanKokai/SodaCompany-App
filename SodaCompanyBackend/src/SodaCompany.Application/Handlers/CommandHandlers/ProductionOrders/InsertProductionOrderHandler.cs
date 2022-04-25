@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SodaCompany.Application.Commands.ProductionOrders;
 using SodaCompany.Application.Mappers;
+using SodaCompany.Application.Responses.ProductionOrders;
 using SodaCompany.Core.Entities;
 using SodaCompany.Core.Repositories;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SodaCompany.Application.Handlers.CommandHandlers.ProductionOrders
 {
-    public class InsertProductionOrderHandler : IRequestHandler<InsertProductionOrderCommand, Unit>
+    public class InsertProductionOrderHandler : IRequestHandler<InsertProductionOrderCommand, ProductionOrderResponse>
     {
         private readonly IProductionOrderRepository _productionOrderRepository;
 
@@ -19,7 +20,7 @@ namespace SodaCompany.Application.Handlers.CommandHandlers.ProductionOrders
             _productionOrderRepository = productionOrderRepository;
         }
 
-        public async Task<Unit> Handle(InsertProductionOrderCommand request, CancellationToken cancellationToken)
+        public async Task<ProductionOrderResponse> Handle(InsertProductionOrderCommand request, CancellationToken cancellationToken)
         {
             var newOrder = ProductionOrderMapper.Mapper.Map<ProductionOrder>(request);
             var orderedProducts = ProductionOrderMapper.Mapper.Map<List<ProductionOrderProduct>>(request.OrderProducts).Select(product =>
@@ -29,7 +30,7 @@ namespace SodaCompany.Application.Handlers.CommandHandlers.ProductionOrders
             }).ToList();
             newOrder.ProductionOrderProduct = orderedProducts;
             var createdOrder = await _productionOrderRepository.AddAsync(newOrder);
-            return Unit.Value;
+            return ProductionOrderMapper.Mapper.Map<ProductionOrderResponse>(createdOrder);
         }
     }
 }

@@ -23,6 +23,9 @@ namespace SodaCompany.Application.Handlers.QueryHandlers.Products
         {
             var totalRecord = await _productionOrderRepository.GetNumberOfRecord();
 
+            if (totalRecord < 1)
+                return default;
+
             if (request.RecordsPerPage < 1)
                 request.RecordsPerPage = 10;
 

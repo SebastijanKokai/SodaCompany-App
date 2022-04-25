@@ -9,9 +9,9 @@ const OrderServices = {
       console.log(error.message);
     }
   },
-  create: async (newOrder) => {
+  create: (newOrder) => {
     try {
-      const response = await api.post("ProductionOrders", newOrder);
+      const response = api.post("ProductionOrders", newOrder);
       return response;
     } catch ({ response }) {
       return response;
