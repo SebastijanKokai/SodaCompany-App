@@ -9,6 +9,16 @@ const OrderServices = {
       console.log(error.message);
     }
   },
+  getAllWithParams: (pageNumber) => {
+    try {
+      const response = api.get(
+        `ProductionOrders?PageNumber=${pageNumber}&RecordsPerPage=4`
+      );
+      return response;
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
   create: (newOrder) => {
     try {
       const response = api.post("ProductionOrders", newOrder);
@@ -17,9 +27,9 @@ const OrderServices = {
       return response;
     }
   },
-  update: (id) => {
+  update: (newOrder) => {
     try {
-      const response = api.put(`ProductionOrders/${id}`);
+      const response = api.put(`ProductionOrders/${newOrder.Id}`, newOrder);
       return response;
     } catch (error) {
       console.log(error.message);

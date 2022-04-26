@@ -1,41 +1,54 @@
 import { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import OrderProductsTable from "./OrderProductsTable/OrderProductsTable";
 
 import Button from "react-bootstrap/Button";
+
 import GenericModal from "../Modal/GenericModal";
 import AddModalBody from "./AddModal/AddModalBody";
 import DeleteModalBody from "./DeleteModal/DeleteModalBody";
+import PaginationComponent from "../UI/Pagination/PaginationComponent";
+
+import { getOrders } from "../../store/orders/orders-slice";
+import EditModalBody from "./EditModal/EditModalBody";
 
 const Orders = () => {
-  const orders = useSelector((state) => state.orders.orders);
+  const dispatch = useDispatch();
 
+  const orders = useSelector((state) => state.orders.orders);
+  const pageInfo = useSelector((state) => state.orders.pageInfo);
   const [orderId, setOrderId] = useState("");
   const [addModalShow, setAddModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
 
   const columns = [
     {
       dataField: "id",
       text: "Id",
+      sort: true,
     },
     {
       dataField: "manager",
       text: "Manager",
+      sort: true,
     },
     {
       dataField: "orderName",
       text: "Order Name",
+      sort: true,
     },
     {
       dataField: "totalProducts",
       text: "Total products",
+      sort: true,
     },
     {
       dataField: "dateCreated",
       text: "Date created",
+      sort: true,
     },
     {
       dataField: "actions",
@@ -53,7 +66,15 @@ const Orders = () => {
             >
               Delete
             </Button>
-            <Button variant="warning">Edit</Button>
+            <Button
+              variant="warning"
+              onClick={() => {
+                setOrderId(row.id);
+                setEditModalShow(true);
+              }}
+            >
+              Edit
+            </Button>
           </div>
         );
       },
@@ -68,13 +89,43 @@ const Orders = () => {
     expandByColumnOnly: true,
   };
 
+  const changePageHandler = (pageItemText) => {
+    let pageNumber = pageInfo.pageNumber;
+
+    switch (pageItemText) {
+      case "Next":
+        pageNumber =
+          pageNumber === pageInfo.totalPages ? pageNumber : pageNumber + 1;
+        break;
+      case "Prev":
+        pageNumber = pageNumber === 1 ? pageNumber : pageNumber - 1;
+        break;
+      case "First":
+        pageNumber = 1;
+        break;
+      case "Last":
+        pageNumber = pageInfo.totalPages;
+        break;
+      default:
+        pageNumber = !isNaN(pageItemText) ? parseInt(pageItemText) : 1;
+        break;
+    }
+
+    dispatch(getOrders(pageNumber));
+  };
+
   return (
     <Fragment>
       <BootstrapTable
+        bootstrap4
         keyField="id"
         data={orders}
         columns={columns}
         expandRow={expandRow}
+      />
+      <PaginationComponent
+        pageInfo={pageInfo}
+        changePageHandler={changePageHandler}
       />
       <div className="d-grid gap-2">
         <Button
@@ -96,6 +147,13 @@ const Orders = () => {
         onHide={() => setDeleteModalShow(false)}
         BodyComponent={DeleteModalBody}
         title={"Delete order"}
+        orderId={orderId}
+      />
+      <GenericModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        BodyComponent={EditModalBody}
+        title={"Edit order"}
         orderId={orderId}
       />
     </Fragment>

@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { addOrder } from "../store/orders/orders-slice";
-
-const useOrderModal = () => {
+const useOrderModal = (request, products, name, orderId) => {
   const dispatch = useDispatch();
 
-  const [selectedProducts, setSelectedProducts] = useState([
-    {
-      productId: "",
-      quantity: 0,
-    },
-  ]);
+  let initialProducts =
+    products === undefined
+      ? [
+          {
+            productId: "",
+            quantity: 0,
+          },
+        ]
+      : JSON.parse(JSON.stringify(products));
+  const [selectedProducts, setSelectedProducts] = useState(initialProducts);
 
-  const [orderName, setOrderName] = useState("");
+  let initialName = name === undefined ? "" : name;
+
+  const [orderName, setOrderName] = useState(initialName);
 
   const orderNameChangeHandler = (e) => {
     setOrderName(e.target.value);
@@ -106,14 +110,15 @@ const useOrderModal = () => {
     const today = new Date(timeElapsed);
 
     const newOrder = {
+      Id: orderId,
       Name: orderName,
       CreationDate: today.toISOString(),
-      CreatedBy: "9d6f01e7-a53e-4c4a-a9ea-653732fe4af3",
+      CreatedBy: "d29a42c5-8f94-4b2d-a96c-632ed7ca9f22",
       OrderProducts: selectedProducts,
     };
 
-    dispatch(addOrder(newOrder));
-    resetFields();
+    dispatch(request(newOrder));
+    // resetFields();
   };
 
   return {

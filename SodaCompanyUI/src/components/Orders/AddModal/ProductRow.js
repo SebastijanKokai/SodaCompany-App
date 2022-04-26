@@ -11,7 +11,7 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
         <Form.Select
           id="select"
           name="productId"
-          defaultValue=""
+          defaultValue={product.productId}
           onChange={onChange}
         >
           <option value="" disabled>

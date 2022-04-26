@@ -12,7 +12,7 @@ import Orders from "./components/Orders/Orders";
 
 const App = () => {
   const dispatch = useDispatch();
-  dispatch(getOrders());
+  dispatch(getOrders(1));
   // dispatch(getProducts());
 
   return (

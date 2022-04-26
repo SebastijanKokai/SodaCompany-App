@@ -276,21 +276,21 @@ namespace SodaCompany.Infrastructure.Extensions
         {
             context.ProductionOrder.Add(new ProductionOrder()
             {
-                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreatedBy = Guid.Parse("d29a42c5-8f94-4b2d-a96c-632ed7ca9f22"),
                 CreationDate = DateTime.Now,
                 Id = Guid.Parse("b6b84d05-f84c-44a0-80c1-4652992d36b1"),
                 Name = "Maxi coca cola .33 nalog"
             });
             context.ProductionOrder.Add(new ProductionOrder()
             {
-                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreatedBy = Guid.Parse("d29a42c5-8f94-4b2d-a96c-632ed7ca9f22"),
                 CreationDate = DateTime.Now,
                 Id = Guid.Parse("13ad389f-f5c1-4378-af98-12a20db1516a"),
                 Name = "Fanta .5 nalog"
             });
             context.ProductionOrder.Add(new ProductionOrder()
             {
-                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreatedBy = Guid.Parse("d29a42c5-8f94-4b2d-a96c-632ed7ca9f22"),
                 CreationDate = DateTime.Now,
                 Id = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4"),
                 Name = "Sprite .5 nalog"

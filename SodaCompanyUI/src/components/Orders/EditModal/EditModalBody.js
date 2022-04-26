@@ -7,10 +7,17 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import ProductRow from "./ProductRow";
-import { addOrder } from "../../../store/orders/orders-slice";
+import ProductRow from "../AddModal/ProductRow";
 
-const AddModalBody = () => {
+import { editOrder } from "../../../store/orders/orders-slice";
+
+const EditModalBody = ({ orderId }) => {
+  const products = useSelector((state) => state.products.products);
+  const orders = useSelector((state) => state.orders.orders);
+  const order = orders.find((order) => order.id === orderId);
+  const initialOrderProducts = order.products;
+  const initialOrderName = order.orderName;
+
   const {
     selectedProducts,
     isButtonDisabled,
@@ -20,9 +27,7 @@ const AddModalBody = () => {
     removeHandler,
     changeHandler,
     submitHandler,
-  } = useOrderModal(addOrder);
-
-  const products = useSelector((state) => state.products.products);
+  } = useOrderModal(editOrder, initialOrderProducts, initialOrderName, orderId);
 
   return (
     <Form>
@@ -71,7 +76,7 @@ const AddModalBody = () => {
             size="md"
             onClick={submitHandler}
           >
-            Add Order
+            Modify Changes
           </Button>
         </Col>
       </Row>
@@ -79,4 +84,4 @@ const AddModalBody = () => {
   );
 };
 
-export default AddModalBody;
+export default EditModalBody;

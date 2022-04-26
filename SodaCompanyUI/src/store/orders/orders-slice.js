@@ -6,6 +6,11 @@ const ordersSlice = createSlice({
   name: "orders",
   initialState: {
     orders: [],
+    pageInfo: {
+      pageNumber: 1,
+      totalPages: 1,
+      totalRecords: 0,
+    },
     isLoading: false,
     error: {},
   },
@@ -14,7 +19,8 @@ const ordersSlice = createSlice({
       state.isLoading = true;
     },
     getOrdersSuccess(state, action) {
-      const { data } = action.payload;
+      const { pageNumber, totalPages, totalRecords, data } = action.payload;
+
       const orderArray = [];
       for (const key in data) {
         const date = moment(data.creationDate).format("DD-MM-YYYY");
@@ -28,6 +34,12 @@ const ordersSlice = createSlice({
           products: data[key].orderedProducts,
         });
       }
+
+      state.pageInfo = {
+        pageNumber,
+        totalPages,
+        totalRecords,
+      };
       state.orders = orderArray;
       state.isLoading = false;
     },
@@ -67,6 +79,24 @@ const ordersSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    editOrder(state) {
+      state.isLoading = true;
+    },
+    editOrderSuccess(state, action) {
+      const data = action.payload;
+
+      const orderIndex = state.orders.findIndex(
+        (order) => order.id === data.id
+      );
+      state.orders[orderIndex].orderName = data.name;
+      state.orders[orderIndex].products = data.orderedProducts;
+      state.orders[orderIndex].totalProducts = data.orderedProducts.length;
+      state.isLoading = false;
+    },
+    editOrderError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -77,6 +107,9 @@ export const {
   addOrder,
   addOrderSuccess,
   addOrderError,
+  editOrder,
+  editOrderSuccess,
+  editOrderError,
   deleteOrder,
   deleteOrderSuccess,
   deleteOrderError,
