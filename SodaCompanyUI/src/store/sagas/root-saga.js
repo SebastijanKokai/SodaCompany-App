@@ -6,6 +6,8 @@ import {
   handleEditOrder,
   handleDeleteOrder,
 } from "./handlers/orders";
+
+import { handleGetPlans } from "./handlers/plans";
 import { handleGetProducts } from "./handlers/products";
 
 export function* watcherSaga() {
@@ -15,5 +17,6 @@ export function* watcherSaga() {
     takeEvery("orders/editOrder", handleEditOrder),
     takeEvery("orders/deleteOrder", handleDeleteOrder),
     takeEvery("products/getProducts", handleGetProducts),
+    takeEvery("plans/getPlans", handleGetPlans),
   ]);
 }

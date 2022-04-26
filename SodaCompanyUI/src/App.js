@@ -4,15 +4,18 @@ import { useDispatch } from "react-redux";
 
 import { getOrders } from "./store/orders/orders-slice";
 import { getProducts } from "./store/products/products-slice";
+import { getPlans } from "./store/plans/plans-slice";
 
 import "./App.css";
 
 import Navigation from "./components/Navigation/Navigation";
 import Orders from "./components/Orders/Orders";
+import Plans from "./components/Plans/Plans";
 
 const App = () => {
   const dispatch = useDispatch();
   dispatch(getOrders(1));
+  dispatch(getPlans(1));
   // dispatch(getProducts());
 
   return (
@@ -28,7 +31,7 @@ const App = () => {
           }
         />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/plans" element={<div></div>} />
+        <Route path="/plans" element={<Plans />} />
       </Routes>
     </Fragment>
   );

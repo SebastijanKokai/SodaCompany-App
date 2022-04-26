@@ -13,6 +13,7 @@ import { addOrder } from "../../../store/orders/orders-slice";
 const AddModalBody = () => {
   const {
     selectedProducts,
+    usedProducts,
     isButtonDisabled,
     orderName,
     orderNameChangeHandler,
@@ -42,6 +43,7 @@ const AddModalBody = () => {
           <ProductRow
             key={`ProductRow_${idx}`}
             products={products}
+            usedProducts={usedProducts}
             product={selected}
             onRemove={() => {
               removeHandler(idx);

@@ -160,6 +160,22 @@ namespace SodaCompany.Infrastructure.Extensions
                 ProductionPrice = 50,
                 ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839")
             });
+            context.WorkProcedure.Add(new WorkProcedure()
+            {
+                Id = Guid.Parse("8f3e8330-f665-45dc-bb5b-0bf7275c654d"),
+                Name = "Standardna procedura sprite plastika",
+                Description = "Punjenje, zatvaranje flase, dodavanje nalepnice, pakovanje",
+                ProductionPrice = 50,
+                ProductId = Guid.Parse("f620e5eb-80c6-46f7-be3f-55c0fe633eac")
+            });
+            context.WorkProcedure.Add(new WorkProcedure()
+            {
+                Id = Guid.Parse("b38a6a37-7849-48b2-8023-895ee05c9a5f"),
+                Name = "Standardna procedura fanta",
+                Description = "Punjenje, zatvaranje flase, dodavanje nalepnice, pakovanje",
+                ProductionPrice = 50,
+                ProductId = Guid.Parse("89945a5d-3eb5-4c65-88d6-9f0864bdc376")
+            });
             return context;
         }
         public static SodaCompanyContext PrefillProduct(this SodaCompanyContext context)

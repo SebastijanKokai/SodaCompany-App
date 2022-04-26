@@ -24,6 +24,7 @@ const useOrderModal = (request, products, name, orderId) => {
   };
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [usedProducts, setUsedProducts] = useState([]);
 
   const addHandler = () => {
     if (selectedProducts.length === 5) {
@@ -61,8 +62,18 @@ const useOrderModal = (request, products, name, orderId) => {
   };
 
   const changeHandler = (i, e) => {
+    e.persist();
+
     if (e.target.name === "quantity" && e.target.value >= 1000000) {
       return;
+    }
+
+    if (e.target.name === "productId") {
+      setUsedProducts((prevState) => {
+        const newState = [...prevState];
+        newState.push(e.target.value);
+        return newState;
+      });
     }
 
     const newState = [...selectedProducts];
@@ -123,6 +134,7 @@ const useOrderModal = (request, products, name, orderId) => {
 
   return {
     selectedProducts,
+    usedProducts,
     isButtonDisabled,
     orderName,
     orderNameChangeHandler,
