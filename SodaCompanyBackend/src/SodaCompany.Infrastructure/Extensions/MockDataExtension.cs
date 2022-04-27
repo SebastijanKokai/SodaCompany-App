@@ -211,6 +211,24 @@ namespace SodaCompany.Infrastructure.Extensions
                 ProductionDeadline = DateTime.Now.AddDays(50),
                 ProductionOrderId = Guid.Parse("b6b84d05-f84c-44a0-80c1-4652992d36b1")
             });
+            context.ProductionPlan.Add(new ProductionPlan()
+            {
+                CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+                CreationDate = DateTime.Now,
+                Id = Guid.Parse("ba67615f-af28-49c7-8028-ca009193c1dc"),
+                Name = "Plan proizvodnje 2",
+                ProductionDeadline = DateTime.Now.AddDays(75),
+                ProductionOrderId = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4")
+            });
+            //context.ProductionPlan.Add(new ProductionPlan()
+            //{
+            //    CreatedBy = Guid.Parse("9d6f01e7-a53e-4c4a-a9ea-653732fe4af3"),
+            //    CreationDate = DateTime.Now,
+            //    Id = Guid.Parse("ba67615f-af28-49c7-8028-ca009193c1dc"),
+            //    Name = "Plan proizvodnje 2",
+            //    ProductionDeadline = DateTime.Now.AddDays(75),
+            //    ProductionOrderId = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4")
+            //});
             return context;
         }
         public static SodaCompanyContext PrefillWarehousePart(this SodaCompanyContext context)

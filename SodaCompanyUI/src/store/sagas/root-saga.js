@@ -1,4 +1,6 @@
-import { takeEvery, all } from "redux-saga/effects";
+import { takeLatest, all } from "redux-saga/effects";
+
+import { handleGetAll } from "./handlers/common";
 
 import {
   handleGetOrders,
@@ -12,11 +14,12 @@ import { handleGetProducts } from "./handlers/products";
 
 export function* watcherSaga() {
   yield all([
-    takeEvery("orders/getOrders", handleGetOrders),
-    takeEvery("orders/addOrder", handleAddOrder),
-    takeEvery("orders/editOrder", handleEditOrder),
-    takeEvery("orders/deleteOrder", handleDeleteOrder),
-    takeEvery("products/getProducts", handleGetProducts),
-    takeEvery("plans/getPlans", handleGetPlans),
+    takeLatest("orders/getOrders", handleGetAll),
+    // takeLatest("orders/getOrders", handleGetOrders),
+    takeLatest("orders/addOrder", handleAddOrder),
+    takeLatest("orders/editOrder", handleEditOrder),
+    takeLatest("orders/deleteOrder", handleDeleteOrder),
+    takeLatest("products/getProducts", handleGetProducts),
+    takeLatest("plans/getPlans", handleGetPlans),
   ]);
 }

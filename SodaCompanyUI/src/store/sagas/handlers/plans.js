@@ -3,12 +3,16 @@ import { getPlansSuccess, getPlansError } from "../../plans/plans-slice";
 import PlanServices from "../../../services/PlanServices";
 
 export function* handleGetPlans(action) {
-  try {
-    const pageNumber = action.payload;
-    let response = yield call(PlanServices.getAllWithParams, pageNumber);
-    yield put(getPlansSuccess(response.data));
-  } catch (error) {
-    yield put(getPlansError(error.message));
-    console.log(error.message);
+  const pageNumber = action.payload;
+  let { data, statusCode } = yield call(
+    PlanServices.getAllWithParams,
+    pageNumber
+  );
+
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(getPlansError(data.message));
+    console.log(data.message);
+  } else {
+    yield put(getPlansSuccess(data));
   }
 }

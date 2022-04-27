@@ -16,16 +16,17 @@ import OrderServices from "../../../services/OrderServices";
 import ProductServices from "../../../services/ProductServices";
 
 export function* handleGetOrders(action) {
-  try {
-    const pageNumber = action.payload;
-    let response = yield call(OrderServices.getAllWithParams, pageNumber);
-    yield put(getOrdersSuccess(response.data));
+  const pageNumber = action.payload;
+  let { data, statusCode } = yield call(
+    OrderServices.getAllWithParams,
+    pageNumber
+  );
 
-    response = yield call(ProductServices.getAll);
-    yield put(getProductsSuccess(response.data));
-  } catch (error) {
-    yield put(getOrdersError(error.message));
-    console.log(error.message);
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(getOrdersError(data.message));
+    console.log(data.message);
+  } else {
+    yield put(getOrdersSuccess(data));
   }
 }
 

@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 
 const usePlanTable = () => {
   const plans = useSelector((state) => state.plans.plans);
+  const pageInfo = useSelector((state) => state.plans.pageInfo);
+  const [addModalShow, setAddModalShow] = useState(false);
 
   const columns = [
     {
@@ -58,6 +61,9 @@ const usePlanTable = () => {
   return {
     plans,
     columns,
+    pageInfo,
+    addModalShow,
+    setAddModalShow,
   };
 };
 

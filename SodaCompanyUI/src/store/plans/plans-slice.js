@@ -6,6 +6,11 @@ const plansSlice = createSlice({
   name: "plans",
   initialState: {
     plans: [],
+    pageInfo: {
+      pageNumber: 1,
+      totalPages: 1,
+      totalRecords: 0,
+    },
     isLoading: false,
     error: {},
   },
@@ -14,7 +19,7 @@ const plansSlice = createSlice({
       state.isLoading = true;
     },
     getPlansSuccess(state, action) {
-      const { data } = action.payload;
+      const { pageNumber, totalPages, totalRecords, data } = action.payload;
 
       for (const key in data) {
         const startDate = moment(data[key].productionOrderCreationDate).format(
@@ -33,6 +38,12 @@ const plansSlice = createSlice({
           endDate,
         });
       }
+
+      state.pageInfo = {
+        pageNumber,
+        totalPages,
+        totalRecords,
+      };
 
       state.isLoading = false;
     },

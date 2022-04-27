@@ -15,8 +15,6 @@ import Plans from "./components/Plans/Plans";
 const App = () => {
   const dispatch = useDispatch();
   dispatch(getOrders(1));
-  dispatch(getPlans(1));
-  // dispatch(getProducts());
 
   return (
     <Fragment>
