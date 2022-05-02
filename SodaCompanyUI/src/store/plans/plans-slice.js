@@ -51,9 +51,55 @@ const plansSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    addPlan(state) {
+      state.isLoading = true;
+    },
+    addPlanSuccess(state, action) {
+      const data = action.payload;
+
+      const startDate = moment(data.creationDate).format("DD-MM-YYYY");
+      const endDate = moment(data.productionDeadline).format("DD-MM-YYYY");
+
+      state.plans.push({
+        id: "Need Id",
+        manager: "Need name",
+        planName: data.name,
+        orderId: data.productionOrderId,
+        startDate,
+        endDate,
+      });
+
+      state.isLoading = false;
+    },
+    addPlanError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    deletePlan(state) {
+      state.isLoading = true;
+    },
+    deletePlanSuccess(state, action) {
+      const id = action.payload;
+      state.plans = state.plans.filter((plan) => plan.id !== id);
+      state.isLoading = false;
+    },
+    deletePlanError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export const { getPlans, getPlansSuccess, getPlansError } = plansSlice.actions;
+export const {
+  getPlans,
+  getPlansSuccess,
+  getPlansError,
+  addPlan,
+  addPlanSuccess,
+  addPlanError,
+  deletePlan,
+  deletePlanSuccess,
+  deletePlanError,
+} = plansSlice.actions;
 
 export default plansSlice.reducer;

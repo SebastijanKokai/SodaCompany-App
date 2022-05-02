@@ -60,14 +60,14 @@ const Orders = () => {
         onHide={() => setDeleteModalShow(false)}
         BodyComponent={DeleteModalBody}
         title={"Delete order"}
-        orderId={orderId}
+        id={orderId}
       />
       <GenericModal
         show={editModalShow}
         onHide={() => setEditModalShow(false)}
         BodyComponent={EditModalBody}
         title={"Edit order"}
-        orderId={orderId}
+        id={orderId}
       />
     </Fragment>
   );

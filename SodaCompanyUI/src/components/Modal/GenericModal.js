@@ -16,7 +16,7 @@ const GenericModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <props.BodyComponent orderId={props.orderId} onHide={props.onHide} />
+        <props.BodyComponent id={props.id} onHide={props.onHide} />
       </Modal.Body>
     </Modal>
   );

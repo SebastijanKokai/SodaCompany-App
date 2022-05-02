@@ -1,12 +1,12 @@
-import Button from "react-bootstrap/Button";
-
 import { useDispatch } from "react-redux";
-import { deleteOrder } from "../../../store/orders/orders-slice";
+import { deletePlan } from "../../store/plans/plans-slice";
+
+import Button from "react-bootstrap/Button";
 
 const DeleteModalBody = ({ id, onHide }) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
-    dispatch(deleteOrder(id));
+    dispatch(deletePlan(id));
     onHide();
   };
 

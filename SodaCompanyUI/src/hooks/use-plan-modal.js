@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { addPlan } from "../store/plans/plans-slice";
+
 const usePlanModal = () => {
   const dispatch = useDispatch();
 
@@ -61,7 +63,7 @@ const usePlanModal = () => {
     setPlanProcedures(newState);
   };
 
-  const submitHandler = () => {
+  const checkFields = () => {
     if (
       planName === "" ||
       startDate === "" ||
@@ -69,21 +71,39 @@ const usePlanModal = () => {
       orderId === "" ||
       planProcedures.length === 0
     ) {
+      return false;
+    }
+    return true;
+  };
+
+  const checkDateValidity = () => {
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+
+    if (start < end) {
+      return true;
+    }
+    return false;
+  };
+
+  const submitHandler = () => {
+    if (!checkFields() || !checkDateValidity()) {
       return;
     }
+    // check if product quantity in plan is equal to order quantity
 
     const newPlan = {
       name: planName,
       creationDate: startDate,
       productionDeadline: endDate,
-      createdBy: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      createdBy: "d29a42c5-8f94-4b2d-a96c-632ed7ca9f22", // no auth, so hardcode user which sends the req
       productionOrderId: orderId,
       planWorkProcedures: planProcedures,
     };
 
-    console.log(newPlan);
+    // console.log(newPlan);
 
-    // dispatch()
+    dispatch(addPlan(newPlan));
   };
 
   return {

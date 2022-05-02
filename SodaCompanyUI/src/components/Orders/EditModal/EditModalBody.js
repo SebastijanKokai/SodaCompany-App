@@ -11,10 +11,10 @@ import ProductRow from "../AddModal/ProductRow";
 
 import { editOrder } from "../../../store/orders/orders-slice";
 
-const EditModalBody = ({ orderId }) => {
+const EditModalBody = ({ id }) => {
   const products = useSelector((state) => state.products.products);
   const orders = useSelector((state) => state.orders.orders);
-  const order = orders.find((order) => order.id === orderId);
+  const order = orders.find((order) => order.id === id);
   const initialOrderProducts = order.products;
   const initialOrderName = order.orderName;
 
@@ -27,7 +27,7 @@ const EditModalBody = ({ orderId }) => {
     removeHandler,
     changeHandler,
     submitHandler,
-  } = useOrderModal(editOrder, initialOrderProducts, initialOrderName, orderId);
+  } = useOrderModal(editOrder, initialOrderProducts, initialOrderName, id);
 
   return (
     <Form>

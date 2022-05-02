@@ -24,6 +24,7 @@ const ModalProductRow = ({
           id="product"
           name="productId"
           defaultValue={product.productId}
+          disabled
         >
           {products.map((product, idx) => (
             <option key={`Product_${idx}`} value={product.id}>

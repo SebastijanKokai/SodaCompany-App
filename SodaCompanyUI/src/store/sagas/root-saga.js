@@ -9,7 +9,11 @@ import {
   handleDeleteOrder,
 } from "./handlers/orders";
 
-import { handleGetPlans } from "./handlers/plans";
+import {
+  handleGetPlans,
+  handleAddPlan,
+  handleDeletePlan,
+} from "./handlers/plans";
 import { handleGetProducts } from "./handlers/products";
 
 export function* watcherSaga() {
@@ -21,5 +25,7 @@ export function* watcherSaga() {
     takeLatest("orders/deleteOrder", handleDeleteOrder),
     takeLatest("products/getProducts", handleGetProducts),
     takeLatest("plans/getPlans", handleGetPlans),
+    takeLatest("plans/addPlan", handleAddPlan),
+    takeLatest("plans/deletePlan", handleDeletePlan),
   ]);
 }

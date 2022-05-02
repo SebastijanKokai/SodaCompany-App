@@ -8,11 +8,20 @@ import usePlanTable from "../../hooks/use-plan-table";
 
 import GenericModal from "../Modal/GenericModal";
 import AddModalBody from "./AddModalBody";
+import DeleteModalBody from "./DeleteModalBody";
 import PaginationComponent from "../UI/Pagination/PaginationComponent";
 
 const Plans = () => {
-  const { plans, columns, pageInfo, addModalShow, setAddModalShow } =
-    usePlanTable();
+  const {
+    plans,
+    planId,
+    columns,
+    pageInfo,
+    addModalShow,
+    setAddModalShow,
+    deleteModalShow,
+    setDeleteModalShow,
+  } = usePlanTable();
 
   return (
     <Fragment>
@@ -38,6 +47,13 @@ const Plans = () => {
         onHide={() => setAddModalShow(false)}
         BodyComponent={AddModalBody}
         title={"Add Plan"}
+      />
+      <GenericModal
+        show={deleteModalShow}
+        onHide={() => setDeleteModalShow(false)}
+        BodyComponent={DeleteModalBody}
+        title={"Delete Plan"}
+        id={planId}
       />
     </Fragment>
   );

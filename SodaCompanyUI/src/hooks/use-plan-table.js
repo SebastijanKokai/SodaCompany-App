@@ -6,7 +6,9 @@ import Button from "react-bootstrap/Button";
 const usePlanTable = () => {
   const plans = useSelector((state) => state.plans.plans);
   const pageInfo = useSelector((state) => state.plans.pageInfo);
+  const [planId, setPlanId] = useState("");
   const [addModalShow, setAddModalShow] = useState(false);
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
 
   const columns = [
     {
@@ -48,6 +50,11 @@ const usePlanTable = () => {
             <Button
               className="btn btn-danger btn-xs"
               style={{ marginRight: "12px" }}
+              onClick={() => {
+                setPlanId(row.id);
+                console.log(row.id);
+                setDeleteModalShow(true);
+              }}
             >
               Delete
             </Button>
@@ -60,10 +67,13 @@ const usePlanTable = () => {
 
   return {
     plans,
+    planId,
     columns,
     pageInfo,
     addModalShow,
     setAddModalShow,
+    deleteModalShow,
+    setDeleteModalShow,
   };
 };
 
