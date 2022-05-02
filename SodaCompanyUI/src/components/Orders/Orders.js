@@ -4,9 +4,9 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Button from "react-bootstrap/Button";
 
 import GenericModal from "../Modal/GenericModal";
-import AddModalBody from "./AddModal/AddModalBody";
-import DeleteModalBody from "./DeleteModal/DeleteModalBody";
-import EditModalBody from "./EditModal/EditModalBody";
+import AddModalBody from "./Modals/AddModalBody";
+import DeleteModalBody from "./Modals/DeleteModalBody";
+import EditModalBody from "./Modals/EditModalBody";
 import PaginationComponent from "../UI/Pagination/PaginationComponent";
 
 import useOrderTable from "../../hooks/use-order-table";

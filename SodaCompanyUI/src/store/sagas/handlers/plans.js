@@ -38,7 +38,7 @@ export function* handleAddPlan(action) {
 
 export function* handleDeletePlan(action) {
   const id = action.payload;
-  console.log(id);
+
   yield put(deletePlanSuccess(id));
 
   // let { data, statusCode } = yield call(PlanServices.delete, id);

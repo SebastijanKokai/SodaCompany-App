@@ -36,6 +36,7 @@ const plansSlice = createSlice({
           orderId: data[key].productionOrderId,
           startDate,
           endDate,
+          planWorkProcedures: data[key].productionPlanWorkProcedure,
         });
       }
 
@@ -67,6 +68,7 @@ const plansSlice = createSlice({
         orderId: data.productionOrderId,
         startDate,
         endDate,
+        planWorkProcedures: data.planWorkProcedures,
       });
 
       state.isLoading = false;
@@ -84,6 +86,29 @@ const plansSlice = createSlice({
       state.isLoading = false;
     },
     deletePlanError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    editPlan(state) {
+      state.isLoading = true;
+    },
+    editPlanSuccess(state, action) {
+      const data = action.payload;
+
+      const startDate = moment(data.creationDate).format("DD-MM-YYYY");
+      const endDate = moment(data.productionDeadline).format("DD-MM-YYYY");
+
+      const planIndex = state.plans.findIndex((plan) => plan.id === data.id);
+
+      state.plans[planIndex].planName = data.name;
+      state.plans[planIndex].startDate = startDate;
+      state.plans[planIndex].endDate = endDate;
+      state.plans[planIndex].orderId = data.orderId;
+      state.plans[planIndex].planWorkProcedures = data.planWorkProcedures;
+
+      state.isLoading = false;
+    },
+    editPlanError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },

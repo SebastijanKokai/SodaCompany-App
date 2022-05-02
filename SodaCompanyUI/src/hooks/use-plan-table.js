@@ -52,7 +52,6 @@ const usePlanTable = () => {
               style={{ marginRight: "12px" }}
               onClick={() => {
                 setPlanId(row.id);
-                console.log(row.id);
                 setDeleteModalShow(true);
               }}
             >

@@ -101,8 +101,6 @@ const usePlanModal = () => {
       planWorkProcedures: planProcedures,
     };
 
-    // console.log(newPlan);
-
     dispatch(addPlan(newPlan));
   };
 
