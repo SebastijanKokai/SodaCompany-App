@@ -8,9 +8,7 @@ const usePlanModal = () => {
 
   const products = useSelector((state) => state.products.products);
   const orders = useSelector((state) => state.orders.orders);
-  const workProcedures = useSelector(
-    (state) => state.workProcedures.workProcedures
-  );
+  const workProcedures = useSelector((state) => state.products.workProcedures);
 
   const [planName, setPlanName] = useState("");
   const [orderId, setOrderId] = useState("");

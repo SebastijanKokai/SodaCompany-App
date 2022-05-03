@@ -13,6 +13,7 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
           name="productId"
           defaultValue={product.productId}
           onChange={onChange}
+          required
         >
           <option value="" disabled>
             Select product
@@ -29,9 +30,10 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
         <Form.Control
           id="quantity"
           name="quantity"
-          type="number"
+          type="text"
           value={product.quantity}
           onChange={onChange}
+          required
         />
       </Col>
       <Col xs="2" md="auto" style={{ margin: "30px 0" }}>

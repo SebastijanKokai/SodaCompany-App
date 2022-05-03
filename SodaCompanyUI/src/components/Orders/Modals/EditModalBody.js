@@ -5,7 +5,7 @@ import useOrderModal from "../../../hooks/use-order-modal";
 import { editOrder } from "../../../store/orders/orders-slice";
 import ModalForm from "./ModalForm";
 
-const EditModalBody = ({ id }) => {
+const EditModalBody = ({ id, onHide }) => {
   const products = useSelector((state) => state.products.products);
   const orders = useSelector((state) => state.orders.orders);
   const order = orders.find((order) => order.id === id);
@@ -21,7 +21,13 @@ const EditModalBody = ({ id }) => {
     removeHandler,
     changeHandler,
     submitHandler,
-  } = useOrderModal(editOrder, initialOrderProducts, initialOrderName, id);
+  } = useOrderModal(
+    editOrder,
+    initialOrderProducts,
+    initialOrderName,
+    id,
+    onHide
+  );
 
   return (
     <ModalForm
@@ -35,6 +41,7 @@ const EditModalBody = ({ id }) => {
       isButtonDisabled={isButtonDisabled}
       submitHandler={submitHandler}
       buttonText="Modify order"
+      onHide={onHide}
     />
   );
 };

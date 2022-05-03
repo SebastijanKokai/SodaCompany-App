@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-const useOrderModal = (request, products, name, orderId) => {
+const useOrderModal = (request, products, name, orderId, hideModal) => {
   const dispatch = useDispatch();
 
   let initialProducts =
@@ -9,7 +9,7 @@ const useOrderModal = (request, products, name, orderId) => {
       ? [
           {
             productId: "",
-            quantity: 0,
+            quantity: "",
           },
         ]
       : JSON.parse(JSON.stringify(products));
@@ -36,7 +36,7 @@ const useOrderModal = (request, products, name, orderId) => {
         ...prevState,
         {
           productId: "",
-          quantity: 0,
+          quantity: "",
         },
       ];
     });
@@ -105,13 +105,13 @@ const useOrderModal = (request, products, name, orderId) => {
       while (newState.length > 1) {
         newState.pop();
       }
-      newState[0].quantity = 0;
+      newState[0].quantity = "";
       return newState;
     });
   };
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     if (!checkIfValid()) {
       return;
@@ -129,7 +129,11 @@ const useOrderModal = (request, products, name, orderId) => {
     };
 
     dispatch(request(newOrder));
-    // resetFields();
+    if (!orderId) {
+      resetFields(); // if in add mode, reset fields after submission
+    } else {
+      hideModal(); // if in edit mode, close modal after submission
+    }
   };
 
   return {

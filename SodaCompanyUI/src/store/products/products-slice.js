@@ -4,6 +4,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    workProcedures: [],
     isLoading: false,
     error: {},
   },
@@ -14,6 +15,7 @@ const productsSlice = createSlice({
     getProductsSuccess(state, action) {
       const { data } = action.payload;
       const productArray = [];
+
       for (const key in data) {
         productArray.push({
           id: data[key].id,
@@ -24,8 +26,13 @@ const productsSlice = createSlice({
           productModelType: data[key].productModelType,
           productModelWidth: data[key].productModelWidth,
           productModelHeight: data[key].productModelHeight,
-          workProcedure: data[key].workProcedure,
         });
+
+        const workProcedures = data[key].workProcedure;
+        const productId = data[key].id;
+        for (const key2 in workProcedures) {
+          state.workProcedures.push({ ...workProcedures[key2], productId });
+        }
       }
       state.products = productArray;
       state.isLoading = false;
