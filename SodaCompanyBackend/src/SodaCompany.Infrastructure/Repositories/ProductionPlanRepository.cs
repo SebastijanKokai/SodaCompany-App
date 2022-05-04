@@ -1,4 +1,5 @@
-﻿using SodaCompany.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SodaCompany.Core.Entities;
 using SodaCompany.Core.Repositories;
 using SodaCompany.Infrastructure.Data;
 using SodaCompany.Infrastructure.Repositories.Base;
@@ -12,6 +13,12 @@ namespace SodaCompany.Infrastructure.Repositories
     {
         public ProductionPlanRepository(SodaCompanyContext sodaCompanyContext) : base(sodaCompanyContext)
         {
+        }
+
+        public async Task DeleteAllWorkProceduresOfPlan(Guid planId)
+        {
+            var workProceduresOfPlan = await _sodaCompanyContext.ProductionPlanWorkProcedure.Where(procedure => procedure.ProductionPlanId == planId).ToListAsync();
+            _sodaCompanyContext.ProductionPlanWorkProcedure.RemoveRange(workProceduresOfPlan);
         }
 
         public async Task<ProductionPlan> GetProductionPlanByProductionOrderId(Guid productionOrderId)

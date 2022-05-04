@@ -28,10 +28,25 @@ namespace SodaCompany.API.Controllers
             return NoContent();
         }
         [HttpPost]
-        public async Task<ActionResult> InsertProductionOrder([FromBody] InsertProductionPlanCommand command)
+        public async Task<ActionResult<ProductionPlanResponse>> InsertProductionPlan([FromBody] InsertProductionPlanCommand command)
+        {
+            var createdPlan=await _mediator.Send(command);
+            return Created("", createdPlan);
+        }
+        [HttpPut("{Id}")]
+        public async Task<ActionResult<ProductionPlanResponse>> UpdateProductionPlan([FromBody] UpdateProductionPlanCommand command,[FromRoute] Guid Id)
+        {
+            command.Id = Id;
+            var updatedPlan = await _mediator.Send(command);
+            if (updatedPlan is null)
+                return NotFound();
+            return Ok(updatedPlan);
+        }
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteProductionPlan ([FromRoute] DeleteProductionPlanCommand command)
         {
             await _mediator.Send(command);
-            return Created("", command);
+            return NoContent();
         }
         [HttpPost("{productionPlanId}/WorkProcedures")]
         public async Task<ActionResult> InsertProductionPlanWorkProcedure([FromRoute] Guid productionPlanId, [FromBody] InsertProductionPlanWorkProcedureCommand command)

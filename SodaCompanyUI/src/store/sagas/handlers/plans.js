@@ -39,13 +39,11 @@ export function* handleAddPlan(action) {
 export function* handleDeletePlan(action) {
   const id = action.payload;
 
-  yield put(deletePlanSuccess(id));
+  let { data, statusCode } = yield call(PlanServices.delete, id);
 
-  // let { data, statusCode } = yield call(PlanServices.delete, id);
-
-  // if (statusCode >= 400 && statusCode < 600) {
-  //   yield put(deletePlanError(data.message));
-  // } else {
-  //   yield put(deletePlanSuccess(id));
-  // }
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(deletePlanError(data.message));
+  } else {
+    yield put(deletePlanSuccess(id));
+  }
 }

@@ -8,5 +8,6 @@ namespace SodaCompany.Core.Repositories
     public interface IProductionPlanRepository : IRepository<ProductionPlan>
     {
         Task<ProductionPlan> GetProductionPlanByProductionOrderId(Guid productionOrderId);
+        Task DeleteAllWorkProceduresOfPlan(Guid planId);
     }
 }

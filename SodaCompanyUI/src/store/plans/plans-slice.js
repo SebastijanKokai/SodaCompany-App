@@ -22,12 +22,16 @@ const plansSlice = createSlice({
       const { pageNumber, totalPages, totalRecords, data } = action.payload;
 
       for (const key in data) {
-        const startDate = moment(data[key].productionOrderCreationDate).format(
-          "DD-MM-YYYY"
-        );
+        const startDate = moment(data[key].creationDate).format("DD-MM-YYYY");
         const endDate = moment(data[key].productionDeadline).format(
           "DD-MM-YYYY"
         );
+        console.log(data);
+        console.log(
+          data[key].productionOrderCreationDate,
+          data[key].productionDeadline
+        );
+        console.log(startDate, endDate);
 
         state.plans.push({
           id: data[key].id,
@@ -62,13 +66,13 @@ const plansSlice = createSlice({
       const endDate = moment(data.productionDeadline).format("DD-MM-YYYY");
 
       state.plans.push({
-        id: "Need Id",
-        manager: "Need name",
+        id: data.id,
+        manager: `${data.createdByNavigationName} ${data.createdByNavigationSurname}`,
         planName: data.name,
         orderId: data.productionOrderId,
         startDate,
         endDate,
-        planWorkProcedures: data.planWorkProcedures,
+        planWorkProcedures: data.productionPlanWorkProcedure,
       });
 
       state.isLoading = false;

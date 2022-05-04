@@ -18,9 +18,9 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
           <option value="" disabled>
             Select product
           </option>
-          {products.map((product, idx) => (
-            <option key={`Option_${idx}`} value={product.id}>
-              {product.name}
+          {products.map((pr, idx) => (
+            <option key={`Option_${idx}`} value={pr.id}>
+              {pr.name}
             </option>
           ))}
         </Form.Select>

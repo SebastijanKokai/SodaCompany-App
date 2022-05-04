@@ -21,7 +21,11 @@ namespace SodaCompany.Application.Handlers.CommandHandlers.ProductionOrders
         {
             var productOrder = await _productionOrderRepository.GetByIdAsync(request.Id);
             if (productOrder != null)
+            {
+                await _productionOrderRepository.DeleteAllOrderProducts(request.Id);
+                await _productionOrderRepository.DeleteAllOrderProductionPlans(request.Id);
                 await _productionOrderRepository.DeleteAsync(productOrder);
+            }
             return Unit.Value;
         }
     }

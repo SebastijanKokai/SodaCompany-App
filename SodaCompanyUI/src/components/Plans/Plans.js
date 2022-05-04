@@ -21,6 +21,7 @@ const Plans = () => {
     setAddModalShow,
     deleteModalShow,
     setDeleteModalShow,
+    expandRow,
   } = usePlanTable();
 
   return (
@@ -30,7 +31,7 @@ const Plans = () => {
         keyField="id"
         data={plans}
         columns={columns}
-        // expandRow={expandRow}
+        expandRow={expandRow}
       />
       <PaginationComponent pageInfo={pageInfo} changePageHandler={() => {}} />
       <div className="d-grid gap-2">

@@ -10,6 +10,7 @@ const EditModalBody = ({ id, onHide }) => {
   const orders = useSelector((state) => state.orders.orders);
   const order = orders.find((order) => order.id === id);
   const initialOrderProducts = order.products;
+  console.log(initialOrderProducts);
   const initialOrderName = order.orderName;
 
   const {

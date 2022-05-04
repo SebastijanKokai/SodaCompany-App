@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import PlanProductsTable from "../components/Plans/PlanProductsTable/PlanProductsTable";
+
 import Button from "react-bootstrap/Button";
 
 const usePlanTable = () => {
@@ -64,6 +66,15 @@ const usePlanTable = () => {
     },
   ];
 
+  const expandRow = {
+    renderer: (row) => {
+      console.log(row.planWorkProcedures);
+      return <PlanProductsTable workProcedures={row.planWorkProcedures} />;
+    },
+    showExpandColumn: true,
+    expandByColumnOnly: true,
+  };
+
   return {
     plans,
     planId,
@@ -73,6 +84,7 @@ const usePlanTable = () => {
     setAddModalShow,
     deleteModalShow,
     setDeleteModalShow,
+    expandRow,
   };
 };
 
