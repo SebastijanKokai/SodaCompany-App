@@ -4,6 +4,8 @@ import {
   getPlansError,
   addPlanError,
   addPlanSuccess,
+  editPlanError,
+  editPlanSuccess,
   deletePlanSuccess,
   deletePlanError,
 } from "../../plans/plans-slice";
@@ -33,6 +35,18 @@ export function* handleAddPlan(action) {
     yield put(addPlanError(data.message));
   } else {
     yield put(addPlanSuccess(data));
+  }
+}
+
+export function* handleEditPlan(action) {
+  const newPlan = action.payload;
+  const { data, statusCode } = yield call(PlanServices.update, newPlan);
+
+  if (statusCode >= 400 && statusCode < 600) {
+    yield put(editPlanError(data.message));
+    console.log(data.message);
+  } else {
+    yield put(editPlanSuccess(data));
   }
 }
 

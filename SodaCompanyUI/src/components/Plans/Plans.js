@@ -2,13 +2,14 @@ import { Fragment } from "react";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import Button from "react-bootstrap/Button";
-import { useSelector } from "react-redux";
 
 import usePlanTable from "../../hooks/use-plan-table";
 
 import GenericModal from "../Modal/GenericModal";
-import AddModalBody from "./AddModalBody";
-import DeleteModalBody from "./DeleteModalBody";
+import AddModalBody from "./Modals/AddModalBody";
+import DeleteModalBody from "./Modals/DeleteModalBody";
+import EditModalBody from "./Modals/EditModalBody";
+
 import PaginationComponent from "../UI/Pagination/PaginationComponent";
 
 const Plans = () => {
@@ -16,12 +17,15 @@ const Plans = () => {
     plans,
     planId,
     columns,
+    expandRow,
     pageInfo,
     addModalShow,
     setAddModalShow,
     deleteModalShow,
     setDeleteModalShow,
-    expandRow,
+    editModalShow,
+    setEditModalShow,
+    changePageHandler,
   } = usePlanTable();
 
   return (
@@ -33,7 +37,10 @@ const Plans = () => {
         columns={columns}
         expandRow={expandRow}
       />
-      <PaginationComponent pageInfo={pageInfo} changePageHandler={() => {}} />
+      <PaginationComponent
+        pageInfo={pageInfo}
+        changePageHandler={changePageHandler}
+      />
       <div className="d-grid gap-2">
         <Button
           variant="primary"
@@ -54,6 +61,13 @@ const Plans = () => {
         onHide={() => setDeleteModalShow(false)}
         BodyComponent={DeleteModalBody}
         title={"Delete Plan"}
+        id={planId}
+      />
+      <GenericModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        BodyComponent={EditModalBody}
+        title={"Edit Plan"}
         id={planId}
       />
     </Fragment>

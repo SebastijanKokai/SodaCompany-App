@@ -15,9 +15,13 @@ const ModalProductRow = ({
   let filteredProcedures = procedures.filter(
     (procedure) => procedure.productId === product.productId
   );
+  // console.log(procedures); // all procedures
+  let procedureId = "";
+  // i need procedure for the certain product
+  // let procedureId = procedures.filter(procedure => procedure.id === );
 
   return (
-    <Row>
+    <Row style={{ marginBottom: "2%" }}>
       <Col>
         <Form.Label htmlFor="product">Product</Form.Label>
         <Form.Select
@@ -25,6 +29,7 @@ const ModalProductRow = ({
           name="productId"
           defaultValue={product.productId}
           disabled
+          required
         >
           {products.map((product, idx) => (
             <option key={`Product_${idx}`} value={product.id}>
@@ -42,6 +47,7 @@ const ModalProductRow = ({
           maxLength="6"
           defaultValue={product.quantity}
           onChange={onChange}
+          required
         />
       </Col>
       <Col>
@@ -49,8 +55,9 @@ const ModalProductRow = ({
         <Form.Select
           id="procedure"
           name="workProcedureId"
-          defaultValue={""}
+          defaultValue={procedureId}
           onChange={onChange}
+          required
         >
           <option value="" disabled>
             Select procedure
@@ -62,11 +69,11 @@ const ModalProductRow = ({
           ))}
         </Form.Select>
       </Col>
-      <Col xs="2" md="auto" style={{ margin: "30px 0" }}>
+      {/* <Col xs="2" md="auto" style={{ margin: "30px 0" }}>
         <Button variant="danger" onClick={onRemove}>
           X
         </Button>
-      </Col>
+      </Col> */}
     </Row>
   );
 };

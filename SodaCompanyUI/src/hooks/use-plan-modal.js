@@ -1,31 +1,81 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addPlan } from "../store/plans/plans-slice";
+import moment from "moment";
 
-const usePlanModal = () => {
+const usePlanModal = (
+  request,
+  plan,
+  initialPlanName,
+  initialOrderId,
+  initialStartDate,
+  initialEndDate,
+  initialProcedures,
+  hideModal
+) => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.products);
   const orders = useSelector((state) => state.orders.orders);
   const workProcedures = useSelector((state) => state.products.workProcedures);
 
-  const [planName, setPlanName] = useState("");
-  const [orderId, setOrderId] = useState("");
-  const [orderProducts, setOrderProducts] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [planProcedures, setPlanProcedures] = useState([]);
+  initialPlanName = initialPlanName === undefined ? "" : initialPlanName;
+
+  initialOrderId = initialOrderId === undefined ? "" : initialOrderId;
+
+  const initialOrder =
+    initialOrderId === undefined
+      ? {}
+      : orders.find((order) => order.id === initialOrderId);
+
+  initialStartDate = initialStartDate === undefined ? "" : initialStartDate;
+  initialEndDate = initialEndDate === undefined ? "" : initialEndDate;
+
+  // initialEndDate =
+  //   initialEndDate === undefined
+  //     ? ""
+  //     : new Date(
+  //         new Date(initialEndDate).getTime() -
+  //           new Date(initialEndDate).getTimezoneOffset() * 60000
+  //       )
+  //         .toISOString()
+  //         .split("T")[0];
+
+  const initialPlanProducts =
+    initialProcedures === undefined
+      ? []
+      : initialProcedures.map((procedure) => {
+          return {
+            productId: procedure.workProcedureProductId,
+            productName: procedure.workProcedureProductName,
+            quantity: procedure.quantity,
+          };
+        });
+
+  initialProcedures =
+    initialProcedures === undefined
+      ? []
+      : initialProcedures.map((procedure) => {
+          return {
+            quantity: procedure.quantity,
+            workProcedureId: procedure.workProcedureId,
+          };
+        });
+
+  const [planName, setPlanName] = useState(initialPlanName);
+  const [orderId, setOrderId] = useState(initialOrderId);
+  const [order, setOrder] = useState(initialOrder);
+  const [planProducts, setPlanProducts] = useState(initialPlanProducts);
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
+  const [planProcedures, setPlanProcedures] = useState(initialProcedures);
 
   const planNameChangeHandler = (e) => {
     setPlanName(e.target.value);
   };
 
   const orderChangeHandler = (e) => {
-    setOrderId(e.target.value);
-
     const order = orders.find((order) => order.id === e.target.value);
-
     const orderProducts = order.products;
 
     setPlanProcedures((prevState) => {
@@ -39,8 +89,12 @@ const usePlanModal = () => {
       }
       return arr;
     });
-
-    setOrderProducts(orderProducts);
+    setOrderId(e.target.value);
+    setOrder(order);
+    const splitDate = order.dateCreated.split("-");
+    const startDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+    setStartDate(startDate);
+    setPlanProducts(orderProducts);
   };
 
   const startDateChangeHandler = (e) => {
@@ -52,7 +106,11 @@ const usePlanModal = () => {
   };
 
   const onChangeProcedures = (i, e) => {
-    if (e.target.name === "quantity" && e.target.value >= 1000000) {
+    if (
+      e.target.name === "quantity" &&
+      e.target.value >= 1000000 &&
+      e.target.value <= 0
+    ) {
       return;
     }
 
@@ -61,7 +119,51 @@ const usePlanModal = () => {
     setPlanProcedures(newState);
   };
 
-  const checkFields = () => {
+  const resetFields = () => {
+    setPlanName("");
+    setStartDate("");
+    setEndDate("");
+    setOrderId("");
+    setOrder({});
+    setPlanProcedures([]);
+    setPlanProducts([]);
+  };
+
+  // const checkPlanProductsQuantity = () => {
+  //   let copyOrderProducts = JSON.parse(JSON.stringify(order.products));
+
+  //   for (const key in planProducts) {
+  //     const idx = copyOrderProducts.findIndex(
+  //       (product) => product.productId === planProducts[key].productId
+  //     );
+  //     copyOrderProducts[idx].quantity -= planProducts[key].quantity;
+  //   }
+
+  //   for (const key in copyOrderProducts) {
+  //     if (copyOrderProducts[key].quantity !== 0) {
+  //       console.log("false");
+  //       return false;
+  //     }
+  //   }
+
+  //   console.log("true");
+  //   return true;
+  // };
+
+  const checkPlanProcedures = () => {
+    for (const key in planProcedures) {
+      if (
+        planProcedures[key].quantity <= 0 ||
+        planProcedures.workProcedureId === ""
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const checkEmptyFields = () => {
     if (
       planName === "" ||
       startDate === "" ||
@@ -77,18 +179,18 @@ const usePlanModal = () => {
   const checkDateValidity = () => {
     let start = new Date(startDate);
     let end = new Date(endDate);
+    let orderDate = new Date(order.dateCreated);
 
-    if (start < end) {
+    if (start >= orderDate && start < end) {
       return true;
     }
     return false;
   };
 
   const submitHandler = () => {
-    if (!checkFields() || !checkDateValidity()) {
+    if (!checkEmptyFields() || !checkPlanProcedures() || !checkDateValidity()) {
       return;
     }
-    // check if product quantity in plan is equal to order quantity
 
     const newPlan = {
       name: planName,
@@ -98,8 +200,12 @@ const usePlanModal = () => {
       productionOrderId: orderId,
       planWorkProcedures: planProcedures,
     };
-
-    dispatch(addPlan(newPlan));
+    dispatch(request(newPlan));
+    if (!plan) {
+      resetFields(); // if in add mode, reset fields
+    } else {
+      hideModal(); // if in edit mode, hide modal
+    }
   };
 
   return {
@@ -109,7 +215,7 @@ const usePlanModal = () => {
     orders,
     orderId,
     orderChangeHandler,
-    orderProducts,
+    planProducts,
     startDate,
     endDate,
     startDateChangeHandler,

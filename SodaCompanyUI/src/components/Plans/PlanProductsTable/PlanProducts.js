@@ -9,10 +9,6 @@ const PlanProducts = ({
     quantity,
   },
 }) => {
-  // workProcedureProductName
-  // workProcedureName
-  // quantity
-
   return (
     <Row>
       <Col>{number}</Col>

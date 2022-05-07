@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -7,28 +7,39 @@ import Button from "react-bootstrap/Button";
 
 import ModalProductRow from "./ModalProductRow";
 
-import usePlanModal from "../../hooks/use-plan-modal";
+const ModalForm = ({
+  products,
+  planName,
+  planNameChangeHandler,
+  orders,
+  orderChangeHandler,
+  orderId,
+  planProducts,
+  startDate,
+  startDateChangeHandler,
+  endDate,
+  endDateChangeHandler,
+  workProcedures,
+  onChangeProcedures,
+  submitHandler,
+  buttonText,
+}) => {
+  const [validated, setValidated] = useState(false);
 
-const AddModalBody = () => {
-  const {
-    products,
-    planName,
-    planNameChangeHandler,
-    orders,
-    orderId,
-    orderChangeHandler,
-    orderProducts,
-    startDate,
-    startDateChangeHandler,
-    endDate,
-    endDateChangeHandler,
-    workProcedures,
-    onChangeProcedures,
-    submitHandler,
-  } = usePlanModal();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      submitHandler();
+    }
+
+    setValidated(true);
+  };
 
   return (
-    <Form>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Row>
         <Col>
           <Form.Label htmlFor="planNameId">Plan Name</Form.Label>
@@ -37,6 +48,7 @@ const AddModalBody = () => {
             type="text"
             value={planName}
             onChange={planNameChangeHandler}
+            required
           />
         </Col>
       </Row>
@@ -48,6 +60,8 @@ const AddModalBody = () => {
             type="date"
             value={startDate}
             onChange={startDateChangeHandler}
+            required
+            disabled
           />
         </Col>
         <Col>
@@ -56,6 +70,7 @@ const AddModalBody = () => {
             type="date"
             value={endDate}
             onChange={endDateChangeHandler}
+            required
           />
         </Col>
       </Row>
@@ -66,8 +81,9 @@ const AddModalBody = () => {
           <Form.Select
             id="select"
             name="orderId"
-            defaultValue={""}
+            defaultValue={orderId === undefined ? "" : orderId}
             onChange={orderChangeHandler}
+            required
           >
             <option value="" disabled>
               Select Order
@@ -81,11 +97,11 @@ const AddModalBody = () => {
         </Col>
       </Row>
       <hr />
-      {orderProducts.map((orderProduct, idx) => (
+      {planProducts.map((planProduct, idx) => (
         <ModalProductRow
           key={`ProductRow_${idx}`}
           products={products}
-          product={orderProduct}
+          product={planProduct}
           onRemove={() => {}}
           onChange={(e) => onChangeProcedures(idx, e)}
           procedures={workProcedures}
@@ -93,26 +109,26 @@ const AddModalBody = () => {
         />
       ))}
       {/* <Row>
-        <Col>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => {}}
-            disabled={false}
-          >
-            +
-          </Button>
-        </Col>
-      </Row> */}
+    <Col>
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {}}
+        disabled={false}
+      >
+        +
+      </Button>
+    </Col>
+  </Row> */}
       <Row>
         <Col>
           <Button
             className="float-end"
             variant="primary"
             size="md"
-            onClick={submitHandler}
+            type="submit"
           >
-            Add Plan
+            {buttonText}
           </Button>
         </Col>
       </Row>
@@ -120,4 +136,4 @@ const AddModalBody = () => {
   );
 };
 
-export default AddModalBody;
+export default ModalForm;

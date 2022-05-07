@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deletePlan } from "../../store/plans/plans-slice";
+import { deletePlan } from "../../../store/plans/plans-slice";
 
 import Button from "react-bootstrap/Button";
 

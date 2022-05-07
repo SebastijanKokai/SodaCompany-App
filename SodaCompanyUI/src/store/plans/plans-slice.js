@@ -21,19 +21,15 @@ const plansSlice = createSlice({
     getPlansSuccess(state, action) {
       const { pageNumber, totalPages, totalRecords, data } = action.payload;
 
+      const plans = [];
+
       for (const key in data) {
         const startDate = moment(data[key].creationDate).format("DD-MM-YYYY");
         const endDate = moment(data[key].productionDeadline).format(
           "DD-MM-YYYY"
         );
-        console.log(data);
-        console.log(
-          data[key].productionOrderCreationDate,
-          data[key].productionDeadline
-        );
-        console.log(startDate, endDate);
 
-        state.plans.push({
+        plans.push({
           id: data[key].id,
           manager: `${data[key].createdByNavigationName} ${data[key].createdByNavigationSurname}`,
           planName: data[key].name,
@@ -43,6 +39,8 @@ const plansSlice = createSlice({
           planWorkProcedures: data[key].productionPlanWorkProcedure,
         });
       }
+
+      state.plans = plans;
 
       state.pageInfo = {
         pageNumber,
@@ -99,16 +97,15 @@ const plansSlice = createSlice({
     editPlanSuccess(state, action) {
       const data = action.payload;
 
-      const startDate = moment(data.creationDate).format("DD-MM-YYYY");
       const endDate = moment(data.productionDeadline).format("DD-MM-YYYY");
 
       const planIndex = state.plans.findIndex((plan) => plan.id === data.id);
 
       state.plans[planIndex].planName = data.name;
-      state.plans[planIndex].startDate = startDate;
       state.plans[planIndex].endDate = endDate;
-      state.plans[planIndex].orderId = data.orderId;
-      state.plans[planIndex].planWorkProcedures = data.planWorkProcedures;
+      state.plans[planIndex].orderId = data.productionOrderId;
+      state.plans[planIndex].planWorkProcedures =
+        data.productionPlanWorkProcedure;
 
       state.isLoading = false;
     },
@@ -126,6 +123,9 @@ export const {
   addPlan,
   addPlanSuccess,
   addPlanError,
+  editPlan,
+  editPlanSuccess,
+  editPlanError,
   deletePlan,
   deletePlanSuccess,
   deletePlanError,
