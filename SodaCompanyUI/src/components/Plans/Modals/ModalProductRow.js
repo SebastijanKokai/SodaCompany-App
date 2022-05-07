@@ -1,24 +1,21 @@
-import { useState } from "react";
-
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const ModalProductRow = ({
-  products,
   product,
+  products,
+  procedure,
+  procedures,
   onRemove,
   onChange,
-  procedures,
 }) => {
   let filteredProcedures = procedures.filter(
     (procedure) => procedure.productId === product.productId
   );
-  // console.log(procedures); // all procedures
-  let procedureId = "";
-  // i need procedure for the certain product
-  // let procedureId = procedures.filter(procedure => procedure.id === );
+
+  procedure = procedure === undefined ? "" : procedure;
 
   return (
     <Row style={{ marginBottom: "2%" }}>
@@ -45,7 +42,7 @@ const ModalProductRow = ({
           name="quantity"
           type="text"
           maxLength="6"
-          defaultValue={product.quantity}
+          value={procedure.quantity}
           onChange={onChange}
           required
         />
@@ -55,7 +52,7 @@ const ModalProductRow = ({
         <Form.Select
           id="procedure"
           name="workProcedureId"
-          defaultValue={procedureId}
+          value={procedure.workProcedureId}
           onChange={onChange}
           required
         >

@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getOrders } from "../store/orders/orders-slice";
 
 const useOrderModal = (request, products, name, orderId, hideModal) => {
   const dispatch = useDispatch();
+
+  const pageInfo = useSelector((state) => state.orders.pageInfo);
 
   let initialProducts =
     products === undefined
@@ -130,6 +134,7 @@ const useOrderModal = (request, products, name, orderId, hideModal) => {
 
     dispatch(request(newOrder));
     if (!orderId) {
+      dispatch(getOrders(pageInfo.pageNumber));
       resetFields(); // if in add mode, reset fields after submission
     } else {
       hideModal(); // if in edit mode, close modal after submission

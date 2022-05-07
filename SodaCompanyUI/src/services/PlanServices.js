@@ -29,7 +29,7 @@ const PlanServices = {
   },
   update: (newPlan) => {
     try {
-      const response = api.put(`ProductionPlans/${newPlan.Id}`, newPlan);
+      const response = api.put(`ProductionPlans/${newPlan.id}`, newPlan);
       return response;
     } catch (error) {
       console.log(error.message);

@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const ProductRow = ({ products, product, onRemove, onChange }) => {
+const ModalProductRow = ({ products, product, onRemove, onChange }) => {
   return (
     <Row>
       <Col>
@@ -11,7 +11,7 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
         <Form.Select
           id="select"
           name="productId"
-          defaultValue={product.productId}
+          value={product.productId}
           onChange={onChange}
           required
         >
@@ -45,4 +45,4 @@ const ProductRow = ({ products, product, onRemove, onChange }) => {
   );
 };
 
-export default ProductRow;
+export default ModalProductRow;

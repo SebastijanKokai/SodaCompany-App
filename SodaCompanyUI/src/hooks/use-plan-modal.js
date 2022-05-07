@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import moment from "moment";
+import { getPlans } from "../store/plans/plans-slice";
 
 const usePlanModal = (
   request,
@@ -18,6 +18,7 @@ const usePlanModal = (
   const products = useSelector((state) => state.products.products);
   const orders = useSelector((state) => state.orders.orders);
   const workProcedures = useSelector((state) => state.products.workProcedures);
+  const pageInfo = useSelector((state) => state.plans.pageInfo);
 
   initialPlanName = initialPlanName === undefined ? "" : initialPlanName;
 
@@ -28,18 +29,19 @@ const usePlanModal = (
       ? {}
       : orders.find((order) => order.id === initialOrderId);
 
-  initialStartDate = initialStartDate === undefined ? "" : initialStartDate;
-  initialEndDate = initialEndDate === undefined ? "" : initialEndDate;
+  initialStartDate =
+    initialStartDate === undefined
+      ? ""
+      : `${initialStartDate.split("-")[2]}-${initialStartDate.split("-")[1]}-${
+          initialStartDate.split("-")[0]
+        }`;
 
-  // initialEndDate =
-  //   initialEndDate === undefined
-  //     ? ""
-  //     : new Date(
-  //         new Date(initialEndDate).getTime() -
-  //           new Date(initialEndDate).getTimezoneOffset() * 60000
-  //       )
-  //         .toISOString()
-  //         .split("T")[0];
+  initialEndDate =
+    initialEndDate === undefined
+      ? ""
+      : `${initialEndDate.split("-")[2]}-${initialEndDate.split("-")[1]}-${
+          initialEndDate.split("-")[0]
+        }`;
 
   const initialPlanProducts =
     initialProcedures === undefined
@@ -65,9 +67,9 @@ const usePlanModal = (
   const [planName, setPlanName] = useState(initialPlanName);
   const [orderId, setOrderId] = useState(initialOrderId);
   const [order, setOrder] = useState(initialOrder);
-  const [planProducts, setPlanProducts] = useState(initialPlanProducts);
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
+  const [planProducts, setPlanProducts] = useState(initialPlanProducts);
   const [planProcedures, setPlanProcedures] = useState(initialProcedures);
 
   const planNameChangeHandler = (e) => {
@@ -129,6 +131,8 @@ const usePlanModal = (
     setPlanProducts([]);
   };
 
+  /******  Will be implemented after edit ******/
+
   // const checkPlanProductsQuantity = () => {
   //   let copyOrderProducts = JSON.parse(JSON.stringify(order.products));
 
@@ -179,9 +183,8 @@ const usePlanModal = (
   const checkDateValidity = () => {
     let start = new Date(startDate);
     let end = new Date(endDate);
-    let orderDate = new Date(order.dateCreated);
 
-    if (start >= orderDate && start < end) {
+    if (start < end) {
       return true;
     }
     return false;
@@ -193,6 +196,7 @@ const usePlanModal = (
     }
 
     const newPlan = {
+      id: plan === undefined ? "" : plan.id,
       name: planName,
       creationDate: startDate,
       productionDeadline: endDate,
@@ -202,6 +206,7 @@ const usePlanModal = (
     };
     dispatch(request(newPlan));
     if (!plan) {
+      dispatch(getPlans(pageInfo.pageNumber));
       resetFields(); // if in add mode, reset fields
     } else {
       hideModal(); // if in edit mode, hide modal
@@ -216,6 +221,7 @@ const usePlanModal = (
     orderId,
     orderChangeHandler,
     planProducts,
+    planProcedures,
     startDate,
     endDate,
     startDateChangeHandler,

@@ -12,6 +12,7 @@ const AddModalBody = () => {
     orders,
     orderChangeHandler,
     planProducts,
+    planProcedures,
     startDate,
     startDateChangeHandler,
     endDate,
@@ -29,6 +30,7 @@ const AddModalBody = () => {
       orders={orders}
       orderChangeHandler={orderChangeHandler}
       planProducts={planProducts}
+      planProcedures={planProcedures}
       startDate={startDate}
       startDateChangeHandler={startDateChangeHandler}
       endDate={endDate}

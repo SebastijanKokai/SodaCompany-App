@@ -15,6 +15,7 @@ const ModalForm = ({
   orderChangeHandler,
   orderId,
   planProducts,
+  planProcedures,
   startDate,
   startDateChangeHandler,
   endDate,
@@ -100,11 +101,12 @@ const ModalForm = ({
       {planProducts.map((planProduct, idx) => (
         <ModalProductRow
           key={`ProductRow_${idx}`}
-          products={products}
           product={planProduct}
+          products={products}
+          procedure={planProcedures[idx]}
+          procedures={workProcedures}
           onRemove={() => {}}
           onChange={(e) => onChangeProcedures(idx, e)}
-          procedures={workProcedures}
           idx={idx}
         />
       ))}

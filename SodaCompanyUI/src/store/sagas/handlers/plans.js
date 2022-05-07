@@ -17,7 +17,6 @@ export function* handleGetPlans(action) {
     PlanServices.getAllWithParams,
     pageNumber
   );
-
   if (statusCode >= 400 && statusCode < 600) {
     yield put(getPlansError(data.message));
     console.log(data.message);
