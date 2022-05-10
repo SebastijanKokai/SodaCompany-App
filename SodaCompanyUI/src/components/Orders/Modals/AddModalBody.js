@@ -9,6 +9,7 @@ import ModalForm from "./ModalForm";
 const AddModalBody = () => {
   const {
     selectedProducts,
+    usedProducts,
     isButtonDisabled,
     orderName,
     orderNameChangeHandler,
@@ -18,14 +19,18 @@ const AddModalBody = () => {
     submitHandler,
   } = useOrderModal(addOrder);
 
-  const products = useSelector((state) => state.products.products);
+  const allProducts = useSelector((state) => state.products.products);
+  const availableProducts = allProducts.filter(
+    (product) =>
+      !usedProducts.some((usedProduct) => product.id === usedProduct.productId)
+  );
 
   return (
     <ModalForm
       orderName={orderName}
       orderNameChangeHandler={orderNameChangeHandler}
       selectedProducts={selectedProducts}
-      products={products}
+      products={allProducts}
       removeHandler={removeHandler}
       changeHandler={changeHandler}
       addHandler={addHandler}

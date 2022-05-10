@@ -4,30 +4,35 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const ModalProductRow = ({
-  product,
   products,
   procedure,
   procedures,
   onRemove,
   onChange,
 }) => {
-  let filteredProcedures = procedures.filter(
-    (procedure) => procedure.productId === product.productId
-  );
-
   procedure = procedure === undefined ? "" : procedure;
 
+  const filteredProcedures = procedures.filter(
+    (pr) => pr.productId === procedure.productId
+  );
+
+  const isDisabledSelectAndDelete = procedure.isNew === undefined;
+
   return (
-    <Row style={{ marginBottom: "2%" }}>
+    <Row>
       <Col>
         <Form.Label htmlFor="product">Product</Form.Label>
         <Form.Select
           id="product"
           name="productId"
-          defaultValue={product.productId}
-          disabled
+          value={procedure.productId}
+          onChange={onChange}
+          disabled={isDisabledSelectAndDelete}
           required
         >
+          <option value="" disabled>
+            Select product
+          </option>
           {products.map((product, idx) => (
             <option key={`Product_${idx}`} value={product.id}>
               {product.name}
@@ -66,11 +71,15 @@ const ModalProductRow = ({
           ))}
         </Form.Select>
       </Col>
-      {/* <Col xs="2" md="auto" style={{ margin: "30px 0" }}>
-        <Button variant="danger" onClick={onRemove}>
+      <Col xs="2" md="auto" style={{ margin: "30px 0" }}>
+        <Button
+          variant="danger"
+          onClick={onRemove}
+          disabled={isDisabledSelectAndDelete}
+        >
           X
         </Button>
-      </Col> */}
+      </Col>
     </Row>
   );
 };

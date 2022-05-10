@@ -15,7 +15,9 @@ import Plans from "./components/Plans/Plans";
 const App = () => {
   const dispatch = useDispatch();
   dispatch({ type: "REQUEST_ALL", payload: 1 });
-
+  // dispatch(getProducts());
+  // dispatch(getOrders(1));
+  // dispatch(getPlans(1));
   return (
     <Fragment>
       <Navigation />

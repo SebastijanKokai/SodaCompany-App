@@ -21,7 +21,7 @@ const EditModalBody = ({ id, onHide }) => {
     orders,
     orderId,
     orderChangeHandler,
-    planProducts,
+    // planProducts,
     planProcedures,
     startDate,
     startDateChangeHandler,
@@ -30,6 +30,8 @@ const EditModalBody = ({ id, onHide }) => {
     workProcedures,
     onChangeProcedures,
     submitHandler,
+    addHandler,
+    removeHandler,
   } = usePlanModal(
     editPlan,
     plan,
@@ -49,7 +51,7 @@ const EditModalBody = ({ id, onHide }) => {
       orders={orders}
       orderId={orderId}
       orderChangeHandler={orderChangeHandler}
-      planProducts={planProducts}
+      // planProducts={planProducts}
       planProcedures={planProcedures}
       startDate={startDate}
       startDateChangeHandler={startDateChangeHandler}
@@ -59,6 +61,8 @@ const EditModalBody = ({ id, onHide }) => {
       onChangeProcedures={onChangeProcedures}
       submitHandler={submitHandler}
       buttonText={"Modify plan"}
+      addHandler={addHandler}
+      removeHandler={removeHandler}
     />
   );
 };

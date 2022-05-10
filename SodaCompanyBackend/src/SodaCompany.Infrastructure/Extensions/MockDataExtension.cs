@@ -350,14 +350,14 @@ namespace SodaCompany.Infrastructure.Extensions
             context.ProductionOrderProduct.Add(new ProductionOrderProduct()
             {
                 Id = Guid.Parse("66c8fc91-a35b-4507-a130-3d6739eb6f72"),
-                ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
+                ProductId = Guid.Parse("89945a5d-3eb5-4c65-88d6-9f0864bdc376"),
                 ProductionOrderId = Guid.Parse("13ad389f-f5c1-4378-af98-12a20db1516a"),
                 Quantity = 200
             });
             context.ProductionOrderProduct.Add(new ProductionOrderProduct()
             {
                 Id = Guid.Parse("212c13bf-7148-4f01-bfff-023b9dc1cd9f"),
-                ProductId = Guid.Parse("af07e0c0-fb0a-46fc-9dbb-9ab4d9a0c839"),
+                ProductId = Guid.Parse("89945a5d-3eb5-4c65-88d6-9f0864bdc376"),
                 ProductionOrderId = Guid.Parse("4b10db55-5a02-4842-868f-41bdc1d5b3e4"),
                 Quantity = 200
             });

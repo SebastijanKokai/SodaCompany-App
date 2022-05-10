@@ -20,6 +20,8 @@ const AddModalBody = () => {
     workProcedures,
     onChangeProcedures,
     submitHandler,
+    addHandler,
+    removeHandler,
   } = usePlanModal(addPlan);
 
   return (
@@ -39,6 +41,8 @@ const AddModalBody = () => {
       onChangeProcedures={onChangeProcedures}
       submitHandler={submitHandler}
       buttonText={"Add plan"}
+      addHandler={addHandler}
+      removeHandler={removeHandler}
     />
   );
 };

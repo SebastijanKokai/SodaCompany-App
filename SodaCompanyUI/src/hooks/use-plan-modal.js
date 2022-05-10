@@ -43,22 +43,13 @@ const usePlanModal = (
           initialEndDate.split("-")[0]
         }`;
 
-  const initialPlanProducts =
+  initialProcedures =
     initialProcedures === undefined
       ? []
       : initialProcedures.map((procedure) => {
           return {
             productId: procedure.workProcedureProductId,
             productName: procedure.workProcedureProductName,
-            quantity: procedure.quantity,
-          };
-        });
-
-  initialProcedures =
-    initialProcedures === undefined
-      ? []
-      : initialProcedures.map((procedure) => {
-          return {
             quantity: procedure.quantity,
             workProcedureId: procedure.workProcedureId,
           };
@@ -69,7 +60,6 @@ const usePlanModal = (
   const [order, setOrder] = useState(initialOrder);
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
-  const [planProducts, setPlanProducts] = useState(initialPlanProducts);
   const [planProcedures, setPlanProcedures] = useState(initialProcedures);
 
   const planNameChangeHandler = (e) => {
@@ -85,6 +75,8 @@ const usePlanModal = (
 
       for (const key in orderProducts) {
         arr.push({
+          productId: orderProducts[key].productId,
+          productName: orderProducts[key].productName,
           quantity: orderProducts[key].quantity,
           workProcedureId: "",
         });
@@ -96,7 +88,6 @@ const usePlanModal = (
     const splitDate = order.dateCreated.split("-");
     const startDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
     setStartDate(startDate);
-    setPlanProducts(orderProducts);
   };
 
   const startDateChangeHandler = (e) => {
@@ -121,6 +112,26 @@ const usePlanModal = (
     setPlanProcedures(newState);
   };
 
+  const addHandler = () => {
+    setPlanProcedures((prevState) => [
+      ...prevState,
+      {
+        productId: "",
+        quantity: "",
+        workProcedureId: "",
+        isNew: true,
+      },
+    ]);
+  };
+
+  const removeHandler = (idx, e) => {
+    setPlanProcedures((prevState) => {
+      const newState = [...prevState];
+      newState.splice(idx, 1);
+      return newState;
+    });
+  };
+
   const resetFields = () => {
     setPlanName("");
     setStartDate("");
@@ -128,31 +139,25 @@ const usePlanModal = (
     setOrderId("");
     setOrder({});
     setPlanProcedures([]);
-    setPlanProducts([]);
   };
 
-  /******  Will be implemented after edit ******/
+  const checkPlanProductsQuantity = () => {
+    let copyOrderProducts = JSON.parse(JSON.stringify([...order.products]));
 
-  // const checkPlanProductsQuantity = () => {
-  //   let copyOrderProducts = JSON.parse(JSON.stringify(order.products));
+    for (let i = 0; i < planProcedures.length; i++) {
+      const idx = copyOrderProducts.findIndex(
+        (product) => product.productId === planProcedures[i].productId
+      );
+      copyOrderProducts[idx].quantity -= planProcedures[i].quantity;
+    }
 
-  //   for (const key in planProducts) {
-  //     const idx = copyOrderProducts.findIndex(
-  //       (product) => product.productId === planProducts[key].productId
-  //     );
-  //     copyOrderProducts[idx].quantity -= planProducts[key].quantity;
-  //   }
-
-  //   for (const key in copyOrderProducts) {
-  //     if (copyOrderProducts[key].quantity !== 0) {
-  //       console.log("false");
-  //       return false;
-  //     }
-  //   }
-
-  //   console.log("true");
-  //   return true;
-  // };
+    for (let i = 0; i < copyOrderProducts.length; i++) {
+      if (copyOrderProducts[i].quantity !== 0) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const checkPlanProcedures = () => {
     for (const key in planProcedures) {
@@ -191,7 +196,12 @@ const usePlanModal = (
   };
 
   const submitHandler = () => {
-    if (!checkEmptyFields() || !checkPlanProcedures() || !checkDateValidity()) {
+    if (
+      !checkEmptyFields() ||
+      !checkDateValidity() ||
+      !checkPlanProcedures() ||
+      !checkPlanProductsQuantity()
+    ) {
       return;
     }
 
@@ -220,7 +230,6 @@ const usePlanModal = (
     orders,
     orderId,
     orderChangeHandler,
-    planProducts,
     planProcedures,
     startDate,
     endDate,
@@ -229,6 +238,8 @@ const usePlanModal = (
     workProcedures,
     onChangeProcedures,
     submitHandler,
+    addHandler,
+    removeHandler,
   };
 };
 

@@ -14,7 +14,6 @@ const ModalForm = ({
   orders,
   orderChangeHandler,
   orderId,
-  planProducts,
   planProcedures,
   startDate,
   startDateChangeHandler,
@@ -24,6 +23,8 @@ const ModalForm = ({
   onChangeProcedures,
   submitHandler,
   buttonText,
+  addHandler,
+  removeHandler,
 }) => {
   const [validated, setValidated] = useState(false);
 
@@ -38,6 +39,8 @@ const ModalForm = ({
 
     setValidated(true);
   };
+
+  const isAddButtonDisabled = planProcedures.length === 5;
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -98,30 +101,29 @@ const ModalForm = ({
         </Col>
       </Row>
       <hr />
-      {planProducts.map((planProduct, idx) => (
+      {planProcedures.map((planProcedure, idx) => (
         <ModalProductRow
           key={`ProductRow_${idx}`}
-          product={planProduct}
           products={products}
-          procedure={planProcedures[idx]}
+          procedure={planProcedure}
           procedures={workProcedures}
-          onRemove={() => {}}
+          onRemove={(e) => removeHandler(idx, e)}
           onChange={(e) => onChangeProcedures(idx, e)}
           idx={idx}
         />
       ))}
-      {/* <Row>
-    <Col>
-      <Button
-        variant="primary"
-        size="lg"
-        onClick={() => {}}
-        disabled={false}
-      >
-        +
-      </Button>
-    </Col>
-  </Row> */}
+      <Row>
+        <Col>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={addHandler}
+            disabled={isAddButtonDisabled}
+          >
+            +
+          </Button>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Button

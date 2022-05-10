@@ -72,13 +72,15 @@ const useOrderModal = (request, products, name, orderId, hideModal) => {
       return;
     }
 
-    // if (e.target.name === "productId") {
-    //   setUsedProducts((prevState) => {
-    //     const newState = [...prevState];
-    //     newState.push(e.target.value);
-    //     return newState;
-    //   });
-    // }
+    if (e.target.name === "productId") {
+      setUsedProducts((prevState) => {
+        const newState = [...prevState];
+        newState.push({
+          productId: e.target.value,
+        });
+        return newState;
+      });
+    }
 
     const newState = [...selectedProducts];
     newState[i][e.target.name] = e.target.value;
@@ -115,8 +117,6 @@ const useOrderModal = (request, products, name, orderId, hideModal) => {
   };
 
   const submitHandler = (e) => {
-    // e.preventDefault();
-
     if (!checkIfValid()) {
       return;
     }
