@@ -21,7 +21,6 @@ const EditModalBody = ({ id, onHide }) => {
     orders,
     orderId,
     orderChangeHandler,
-    // planProducts,
     planProcedures,
     startDate,
     startDateChangeHandler,
@@ -51,7 +50,6 @@ const EditModalBody = ({ id, onHide }) => {
       orders={orders}
       orderId={orderId}
       orderChangeHandler={orderChangeHandler}
-      // planProducts={planProducts}
       planProcedures={planProcedures}
       startDate={startDate}
       startDateChangeHandler={startDateChangeHandler}

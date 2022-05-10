@@ -52,6 +52,7 @@ const usePlanModal = (
             productName: procedure.workProcedureProductName,
             quantity: procedure.quantity,
             workProcedureId: procedure.workProcedureId,
+            isNew: true,
           };
         });
 
